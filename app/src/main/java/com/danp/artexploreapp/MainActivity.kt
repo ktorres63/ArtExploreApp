@@ -31,6 +31,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.danp.artexploreapp.ui.theme.ArtExploreAppTheme
 import com.danp.artexploreapp.ui.theme.GreenJC
+import com.danp.artexploreapp.ui.theme.BoneJC
+import com.danp.artexploreapp.ui.theme.PinkNav
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +62,7 @@ fun MyBottomAppBar() {
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                containerColor = GreenJC
+                containerColor = BoneJC
             ) {
                 IconButton(onClick = {
                     selected.value = Icons.Default.Home
@@ -72,7 +74,7 @@ fun MyBottomAppBar() {
                         Icons.Default.Home,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selected.value == Icons.Default.Home) Color.White else Color.DarkGray
+                        tint = if (selected.value == Icons.Default.Home) PinkNav else Color.DarkGray
                     )
                 }
                 IconButton(onClick = {
@@ -85,7 +87,7 @@ fun MyBottomAppBar() {
                         Icons.Default.LocationOn,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selected.value == Icons.Default.LocationOn) Color.White else Color.DarkGray
+                        tint = if (selected.value == Icons.Default.LocationOn) PinkNav else Color.DarkGray
                     )
                 }
                 IconButton(onClick = {
@@ -98,7 +100,7 @@ fun MyBottomAppBar() {
                         Icons.Default.Person,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selected.value == Icons.Default.Person) Color.White else Color.DarkGray
+                        tint = if (selected.value == Icons.Default.Person) PinkNav else Color.DarkGray
                     )
                 }
             }
