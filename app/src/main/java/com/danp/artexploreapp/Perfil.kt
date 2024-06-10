@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.danp.artexploreapp.ui.theme.GreenJC
-
+import com.danp.artexploreapp.ui.theme.PinkNav
 /*
 @Preview(showBackground = true)  //BORRAR AL MANDAR
 @Composable
@@ -67,33 +67,41 @@ fun Perfil() {
 
 @Composable
 fun ProfileSection() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+    Row(
+        verticalAlignment = Alignment.CenterVertically
     ) {
+
         Image(
             imageVector = Icons.Default.AccountCircle,
             contentDescription = "Profile image",
             modifier = Modifier
-                .size(120.dp)
+                .size(200.dp)
                 .clip(CircleShape)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Seven Kay",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = GreenJC
-        )
-        Text(
-            text = "Islamabad",
-            fontSize = 16.sp,
-            color = Color.Gray
-        )
-        Text(
-            text = "Since 2022",
-            fontSize = 16.sp,
-            color = Color.Gray
-        )
+
+        Spacer(modifier = Modifier.width(16.dp)) // Espacio entre la imagen y el texto
+
+        // Textos a la izquierda
+        Column(
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Ayrton Garcia",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = PinkNav
+            )
+            Text(
+                text = "Estudiante",
+                fontSize = 16.sp,
+                color = Color.Gray
+            )
+            Text(
+                text = "Activo",
+                fontSize = 16.sp,
+                color = Color.Gray
+            )
+        }
     }
 }
 
@@ -108,7 +116,7 @@ fun HistorySection() {
             text = "History",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = GreenJC,
+            color = PinkNav,
             modifier = Modifier.align(Alignment.Start)
         )
         LazyRow(
@@ -158,7 +166,7 @@ fun OptionItem(icon: ImageVector, label: String, onClick: (() -> Unit)? = null) 
         Icon(
             imageVector = icon,
             contentDescription = label,
-            tint = GreenJC,
+            tint = PinkNav,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
@@ -174,7 +182,7 @@ fun OptionItem(icon: ImageVector, label: String, onClick: (() -> Unit)? = null) 
 fun LogOutButton() {
     Button(
         onClick = { /* Handle log out button click */ },
-        colors = ButtonDefaults.buttonColors(containerColor = GreenJC)
+        colors = ButtonDefaults.buttonColors(containerColor = PinkNav)
     ) {
         Text("Log Out", color = Color.White)
     }
