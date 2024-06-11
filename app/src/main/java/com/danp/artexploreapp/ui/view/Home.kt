@@ -1,4 +1,4 @@
-package com.danp.artexploreapp
+package com.danp.artexploreapp.ui.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.danp.artexploreapp.ui.theme.GreenJC
 
-
 @Composable
-fun Map() {
+fun Home() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -23,7 +22,7 @@ fun Map() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Map", fontSize = 30.sp, color = GreenJC)
+            Text(text = "Home", fontSize = 30.sp, color = GreenJC)
         }
     }
 }

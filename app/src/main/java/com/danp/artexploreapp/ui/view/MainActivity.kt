@@ -1,4 +1,4 @@
-package com.danp.artexploreapp
+package com.danp.artexploreapp.ui.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,20 +17,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.danp.artexploreapp.ui.theme.ArtExploreAppTheme
-import com.danp.artexploreapp.ui.theme.GreenJC
 import com.danp.artexploreapp.ui.theme.BoneJC
 import com.danp.artexploreapp.ui.theme.PinkNav
 
@@ -111,7 +108,7 @@ fun MyBottomAppBar() {
             startDestination = Screens.Home.screen,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Screens.Home.screen){Home()}
+            composable(Screens.Home.screen){ Home() }
             composable(Screens.Map.screen){ Map() }
             composable(Screens.Perfil.screen){ Perfil() }
 

@@ -1,4 +1,4 @@
-package com.danp.artexploreapp
+package com.danp.artexploreapp.ui.view
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.danp.artexploreapp.ui.theme.GreenJC
+import com.danp.artexploreapp.R
 import com.danp.artexploreapp.ui.theme.PinkNav
 /*
 @Preview(showBackground = true)  //BORRAR AL MANDAR
