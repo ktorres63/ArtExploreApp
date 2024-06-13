@@ -18,7 +18,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(route = Screens.ScreenMap.route) { Map(navController) }
         composable(route = Screens.ScreenUser.route) { Perfil(navController) }
 
-
+        composable(route = Screens.ScreenSettings.route) { Settings(navController) }
 
 
 

@@ -62,7 +62,7 @@ fun Perfil(navController: NavController) {
     ) {
         ProfileSection()
         HistorySection()
-        OptionsSection(context)
+        OptionsSection(context, navController)
         LogOutButton()
     }
 }
@@ -140,7 +140,7 @@ fun HistorySection() {
 }
 
 @Composable
-fun OptionsSection(context: android.content.Context) {
+fun OptionsSection(context: android.content.Context, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -150,7 +150,7 @@ fun OptionsSection(context: android.content.Context) {
             icon = Icons.Filled.Settings,
             label = "Settings",
             onClick = {
-                //TODO
+                navController.navigate(Screens.ScreenSettings.route)
             }
         )
     }
