@@ -24,8 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.danp.artexploreapp.R
 import com.danp.artexploreapp.ui.theme.PinkNav
+
 /*
 @Preview(showBackground = true)  //BORRAR AL MANDAR
 @Composable
@@ -49,7 +51,7 @@ fun Perfil() {
 */
 
 @Composable
-fun Perfil() {
+fun Perfil(navController: NavController) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -148,7 +150,7 @@ fun OptionsSection(context: android.content.Context) {
             icon = Icons.Filled.Settings,
             label = "Settings",
             onClick = {
-                context.startActivity(Intent(context, Screens.Home::class.java))
+                //TODO
             }
         )
     }
