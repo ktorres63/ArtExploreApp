@@ -6,11 +6,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.danp.artexploreapp.auth.presentation.screens.login.LoginScreen
+import com.danp.artexploreapp.auth.presentation.viewmodels.LoginViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = Screens.ScreenLogin.route) {
-        composable(route = Screens.ScreenLogin.route) { Login(navController) }
+        composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
         composable(route = Screens.ScreenSignUp.route) { SignUp(navController) }
         composable(route = Screens.ScreenHome.route) { Home(navController) }
 
