@@ -88,7 +88,10 @@ fun login(navController: NavHostController, viewModel: LoginViewModel) {
                 ) {
 
 
-                InputsLogin(email, password) {viewModel.onLoginChanged(it, password)}
+                InputsLoginEmail(email) {viewModel.onLoginChanged(it, password)}
+                Spacer(modifier = Modifier.height(16.dp))
+                InputsLoginPassword(password) {viewModel.onLoginChanged(email,it)}
+
                 CheckAccept(
                     textAccept = "Acepta los términos y condiciones",
                     isChecked = isAcceptTermsCondition,
@@ -180,22 +183,21 @@ fun TitleSignUp(text: String) {
 
 @Composable
 //@Preview(showBackground = true)
-fun InputsLogin(email: String, password: String, onTextFieldChanged: (String) -> Unit) {
-//    var name by remember { mutableStateOf("") }
+fun InputsLoginEmail(email: String, onTextFieldChanged: (String) -> Unit) {
 
     Column(modifier = Modifier.padding(top = 16.dp, start = 15.dp, end = 15.dp)) {
-//        TextField(
-//            value = name,
-//            onValueChange = { name = it },
-//            label = { Text("Name") }
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
+
         TextField(
             value = email,
             onValueChange = { onTextFieldChanged(it) },
             label = { Text("Email") }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+@Composable
+fun InputsLoginPassword(password: String, onTextFieldChanged: (String) -> Unit) {
+
+    Column(modifier = Modifier.padding(top = 16.dp, start = 15.dp, end = 15.dp)) {
         TextField(
             value = password,
             onValueChange = { onTextFieldChanged(it) },
@@ -205,6 +207,7 @@ fun InputsLogin(email: String, password: String, onTextFieldChanged: (String) ->
         )
     }
 }
+
 
 @Composable
 @Preview(showBackground = true)
