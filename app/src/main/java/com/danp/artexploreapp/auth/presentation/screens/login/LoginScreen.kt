@@ -42,7 +42,9 @@ import com.danp.artexploreapp.auth.presentation.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel) {
+    viewModel.setNavController(navController);
     login(navController, viewModel)
+
 }
 
 @Composable
@@ -88,21 +90,23 @@ fun login(navController: NavHostController, viewModel: LoginViewModel) {
                 ) {
 
 
-                InputsLoginEmail(email) {viewModel.onLoginChanged(it, password)}
+                InputsLoginEmail(email) { viewModel.onLoginChanged(it, password) }
                 Spacer(modifier = Modifier.height(16.dp))
-                InputsLoginPassword(password) {viewModel.onLoginChanged(email,it)}
+                InputsLoginPassword(password) { viewModel.onLoginChanged(email, it) }
 
                 CheckAccept(
                     textAccept = "Acepta los términos y condiciones",
                     isChecked = isAcceptTermsCondition,
-                    onCheckedChange = { viewModel.onAcceptTermsConditionChanged(isAcceptTermsCondition) },
+                    onCheckedChange = { viewModel.onAcceptTermsConditionChanged(!isAcceptTermsCondition) },
                     modifier = Modifier.padding(16.dp)
                 )
                 ButtonContinue(
                     textContinue = "Continuar",
-                    onClick = { /* Acción al hacer clic */ },
+                    onClick = { viewModel.onClickContinue()  },
                     backgroundColor = Color(0xFFFF6A5F), // Color de fondo personalizado
-                    textColor = Color.White // Color de texto personalizado
+                    textColor = Color.White, // Color de texto personalizado
+                    enabled = viewModel.loginEnable.value ?: false
+
                 )
             }
             ImprovedOtherLogin(
@@ -194,6 +198,7 @@ fun InputsLoginEmail(email: String, onTextFieldChanged: (String) -> Unit) {
         )
     }
 }
+
 @Composable
 fun InputsLoginPassword(password: String, onTextFieldChanged: (String) -> Unit) {
 
@@ -251,14 +256,17 @@ fun ButtonContinue(
     textContinue: String,
     onClick: () -> Unit,
     backgroundColor: Color = Color.Blue, // Color de fondo predeterminado
-    textColor: Color = Color.White // Color de texto predeterminado
+    textColor: Color = Color.White, // Color de texto predeterminado
+    enabled: Boolean = true // Estado habilitado predeterminado
+
 ) {
     Button(
         onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth() // Ocupar todo el ancho disponible
             .padding(horizontal = 50.dp, vertical = 8.dp), // Añadir relleno
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor) // Color de fondo personalizado
+        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor), // Color de fondo personalizado
+        enabled = enabled
     ) {
         Text(
             text = textContinue,
