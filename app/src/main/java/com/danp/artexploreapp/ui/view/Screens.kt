@@ -5,9 +5,8 @@ sealed class Screens(val route: String) {
     data object ScreenSignUp: Screens("signUp")
     data object ScreenMapMuseum : Screens("mapMuseum")
 
-    data object ScreenGaleryMap: Screens("galeryMap")
     data object ScreenSettings: Screens("settings")
-    data object ScreenRoomMap: Screens("roomMap")
+    data object ScreenRoom1Map: Screens("room1Map")
 
 
     //Bottom Bar

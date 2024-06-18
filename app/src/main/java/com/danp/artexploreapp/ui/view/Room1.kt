@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.danp.artexploreapp.ui.theme.GreenJC
 
 @Composable
-fun Gallery1(navController: NavController) {
+fun Room1(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
