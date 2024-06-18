@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ArtExploreApp"
+rootProject.name = "Lab05_DANP_Canvas"
 include(":app")
  
