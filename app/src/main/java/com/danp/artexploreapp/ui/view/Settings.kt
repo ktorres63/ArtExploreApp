@@ -1,4 +1,4 @@
-package com.danp.artexploreapp
+package com.danp.artexploreapp.ui.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.danp.artexploreapp.ui.theme.GreenJC
 
 
 @Composable
-fun Map() {
+fun Settings(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -22,7 +23,7 @@ fun Map() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Map", fontSize = 30.sp, color = GreenJC)
+            Text(text = "Setttings", fontSize = 30.sp, color = GreenJC)
         }
     }
 }
