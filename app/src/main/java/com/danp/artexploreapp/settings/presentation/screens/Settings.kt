@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.settings.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

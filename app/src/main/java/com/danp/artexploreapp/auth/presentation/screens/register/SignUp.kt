@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.auth.presentation.screens.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.ui.theme.GreenJC
-
+import com.danp.artexploreapp.util.navigation.Screens
 
 @Composable
-fun Login(navController: NavController) {
+fun SignUp(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -24,17 +24,12 @@ fun Login(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "LOGIN", fontSize = 30.sp, color = GreenJC)
+            Text(text = "SigUp", fontSize = 30.sp, color = GreenJC)
 
             Button(onClick = {
-                navController.navigate(Screens.ScreenHome.route)
+                navController.navigate(Screens.ScreenLogin.route)
             }) {
-                Text(text = "(toHome)")
-            }
-            Button(onClick = {
-                navController.navigate(Screens.ScreenSignUp.route)
-            }) {
-                Text(text = "SignUp")
+                Text(text = "(toLogin)")
             }
         }
     }

@@ -1,8 +1,6 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.paiting.presentation
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.danp.artexploreapp.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Dialog
-import com.danp.artexploreapp.ui.viewmodel.GalleryViewModel
+import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +28,7 @@ import androidx.compose.ui.unit.sp
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun Grito(viewModel: GalleryViewModel) {
+fun Grito(viewModel: ArtRoomViewModel) {
     //val mp: MediaPlayer = MediaPlayer.create(context, R.raw.hola)
 
     Dialog(onDismissRequest = { viewModel.onChangeShowDialog(false) }) {

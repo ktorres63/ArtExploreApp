@@ -38,7 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.danp.artexploreapp.auth.presentation.viewmodels.LoginViewModel
+import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel) {

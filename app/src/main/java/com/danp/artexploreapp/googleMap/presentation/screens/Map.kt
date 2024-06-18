@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.googleMap.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.ui.theme.GreenJC
+import com.danp.artexploreapp.util.navigation.Screens
+
 
 @Composable
-fun SignUp(navController: NavController) {
+fun Map(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -23,13 +25,13 @@ fun SignUp(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "SigUp", fontSize = 30.sp, color = GreenJC)
-
+            Text(text = "Map", fontSize = 30.sp, color = GreenJC)
             Button(onClick = {
-                navController.navigate(Screens.ScreenLogin.route)
+                navController.navigate(Screens.ScreenMapMuseum.route)
             }) {
-                Text(text = "(toLogin)")
+                Text(text = "Museo Unsa")
             }
         }
+
     }
 }

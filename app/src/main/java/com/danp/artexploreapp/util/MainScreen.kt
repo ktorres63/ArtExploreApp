@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.util
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.danp.artexploreapp.R
+import com.danp.artexploreapp.util.navigation.AppNavigation
+import com.danp.artexploreapp.util.navigation.Screens
 
 val bottomBarRoutes = setOf(
     Screens.ScreenHome.route,

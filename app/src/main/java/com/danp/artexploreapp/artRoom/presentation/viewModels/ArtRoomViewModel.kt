@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.viewmodel
+package com.danp.artexploreapp.artRoom.presentation.viewModels
 
 
 import androidx.compose.runtime.getValue
@@ -8,7 +8,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
-class GalleryViewModel : ViewModel() {
+class ArtRoomViewModel : ViewModel() {
     var showDialog2 by mutableStateOf(false)
         private set
     var showDialog1 by mutableStateOf(false)

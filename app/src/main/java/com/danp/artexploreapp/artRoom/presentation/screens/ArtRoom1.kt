@@ -1,18 +1,14 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.artRoom.presentation.screens
 
-import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,14 +21,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.R
-import com.danp.artexploreapp.ui.theme.GreenJC
-import com.danp.artexploreapp.ui.viewmodel.GalleryViewModel
+import com.danp.artexploreapp.paiting.presentation.Grito
+import com.danp.artexploreapp.paiting.presentation.NocheEstrelladaDialogScreen
+import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 
 @Composable
-fun Room1(navController: NavController,viewModel: GalleryViewModel) {
+fun Room1(navController: NavController,viewModel: ArtRoomViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
@@ -70,7 +66,7 @@ fun Room1(navController: NavController,viewModel: GalleryViewModel) {
 }
 
 @Composable
-fun IconBox(viewModel: GalleryViewModel, offsetX: Dp, modifier: Modifier = Modifier) {
+fun IconBox(viewModel: ArtRoomViewModel, offsetX: Dp, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .offset(x = offsetX)
@@ -90,7 +86,7 @@ fun IconBox(viewModel: GalleryViewModel, offsetX: Dp, modifier: Modifier = Modif
 }
 
 @Composable
-fun IconBox2(viewModel: GalleryViewModel, offsetX: Dp, modifier: Modifier = Modifier) {
+fun IconBox2(viewModel: ArtRoomViewModel, offsetX: Dp, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .offset(x = offsetX)

@@ -1,6 +1,5 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.profile.presentation
 
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,28 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.R
 import com.danp.artexploreapp.ui.theme.PinkNav
+import com.danp.artexploreapp.util.navigation.Screens
 
-/*
-@Preview(showBackground = true)  //BORRAR AL MANDAR
-@Composable
-fun Perfil() {
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.Center),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Perfil", fontSize = 30.sp, color = GreenJC)
-            //TODO
-        }
-    }
- val icons = listOf(Icons.Filled.Favorite, Icons.Filled.Share, Icons.Filled.Settings)
- val labels = listOf("Your Favorite", "Share App", "Settings")
-*/
 
 @Composable
 fun Perfil(navController: NavController) {

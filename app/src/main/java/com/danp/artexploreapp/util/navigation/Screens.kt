@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.util.navigation
 
 sealed class Screens(val route: String) {
     data object ScreenLogin: Screens("login")
@@ -10,7 +10,7 @@ sealed class Screens(val route: String) {
 
 
     //Bottom Bar
-    data object ScreenHome :Screens(route = "home")
+    data object ScreenHome : Screens(route = "home")
     data object ScreenMap : Screens(route = "map")
     data object ScreenUser : Screens(route = "user")
     data object ScreenQrPainting: Screens("qr")

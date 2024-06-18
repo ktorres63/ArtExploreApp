@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.ui.view
+package com.danp.artexploreapp.paiting.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,11 +12,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.danp.artexploreapp.R
-import com.danp.artexploreapp.ui.viewmodel.GalleryViewModel
+import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 
 
 @Composable
-fun NocheEstrelladaDialogScreen(viewModel: GalleryViewModel) {
+fun NocheEstrelladaDialogScreen(viewModel: ArtRoomViewModel) {
 
     Dialog(onDismissRequest = { viewModel.onChangeShowDialog(false) }) {
         Box(

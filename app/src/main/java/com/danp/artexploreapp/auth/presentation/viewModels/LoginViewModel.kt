@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.auth.presentation.viewmodels
+package com.danp.artexploreapp.auth.presentation.viewModels
 
 import android.util.Log
 import android.util.Patterns
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.danp.artexploreapp.ui.view.Screens
+import com.danp.artexploreapp.util.navigation.Screens
 import kotlinx.coroutines.delay
 
 class LoginViewModel : ViewModel() {
