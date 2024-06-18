@@ -56,17 +56,27 @@ fun MapMuseum(navController: NavController) {
         val textMeasurer = rememberTextMeasurer()
         val scope = rememberCoroutineScope()
 
+
+
         Canvas(modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = { offset ->
-                        scope.launch {
+                        scope.launch {//Completar con el mapa verdadero de la galería (karlo )
+                            val height: Float = 1383 / 23F
+                            val width: Float = 702 / 11f
                             Log.i("asd", "Círculo tocado en $offset")
-                            //Height = 1383.0
-                            //Width = 702.0
-                            if(offset.x > 95.9f){ // investigar como determinar la posicion de cada rectangulo
-                                navController.navigate(Screens.ScreenSettings.route)
+
+                            //Height = 1383.0 /23
+                            //Width = 702.0 /11
+
+                            //Galeria 1
+//                            X =  702.0... 255.27272
+//                            Y= 0.0 ... 120.26087
+                            if ((offset.x > 255 && offset.x <702) && (offset.y >0 && offset.y<120)) {
+                                //navController.navigate(Screens.ScreenSettings.route)
+                                Log.i("asdf", "Sala 1")
                             }
 
 
@@ -78,8 +88,8 @@ fun MapMuseum(navController: NavController) {
             val customHeight = size.height / 23f
             val customWidth = size.width / 11f
 
-            Log.i("qwe","Height = ${size.height}")
-            Log.i("qwe","Width = ${size.width}")
+            Log.i("qwe", "Height = ${size.height}")
+            Log.i("qwe", "Width = ${size.width}")
             val treePath1 = pathToRectangles(
                 customWidth, customHeight, 4.5f, 18.5f, 7.5f, 21f,
             )
@@ -92,6 +102,12 @@ fun MapMuseum(navController: NavController) {
             val gallery1Path = pathToRectangles(
                 customWidth, customHeight, 4f, 2f, 11f, 0f
             )
+            Log.i(
+                "gallery 1",
+                "X =  ${customWidth * 11f}... ${customWidth * 4f}\nY= ${customHeight * 0f} ... ${customHeight * 2f}"
+            )
+
+
             val gallery2Path = pathToRectangles(
                 customWidth, customHeight, 9f, 7.5f, 11f, 2f
             )
