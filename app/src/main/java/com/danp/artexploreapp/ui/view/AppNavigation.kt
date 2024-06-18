@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.danp.artexploreapp.auth.presentation.screens.login.LoginScreen
 import com.danp.artexploreapp.auth.presentation.viewmodels.LoginViewModel
+import com.danp.artexploreapp.ui.viewmodel.GalleryViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -23,7 +24,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(route = Screens.ScreenUser.route) { Perfil(navController) }
 
         composable(route = Screens.ScreenSettings.route) { Settings(navController) }
-        composable(route = Screens.ScreenRoom1Map.route) {Room1(navController) }
+        composable(route = Screens.ScreenRoom1Map.route) {Room1(navController, GalleryViewModel(),) }
 
 
 
