@@ -134,7 +134,7 @@ fun CanvaPreview() {
                 drawPath(gallery1Path, Color(0xFFDB073D))
                 drawPath(gallery1Path, Color.Black, style = Stroke(width = 8f))
                 translate(left = customWidth * 6.5f, top = customHeight * 0.5f) {
-                    drawText(measuredText("Galeria 1", textMeasurer))
+                    drawText(measuredText("Habitacion 1", textMeasurer))
                 }
 
                 //Gallery 2 (border,rectangle and text)
@@ -143,13 +143,13 @@ fun CanvaPreview() {
                 withTransform({
                     translate(left = customWidth * -5.7f, top = customHeight * -2f)
                     rotate(degrees = 90F)
-                }) { drawText(measuredText("Galeria 2", textMeasurer)) }
+                }) { drawText(measuredText("Habitacion 2", textMeasurer)) }
 
                 //Gallery 3 (border,rectangle and text)
                 drawPath(gallery3Path, Color(0xFF8EC7D2))
                 drawPath(gallery3Path, Color.Black, style = Stroke(width = 8f))
                 translate(left = customWidth * 5.5f, top = customHeight * 6f) {
-                    drawText(measuredText("Galeria 3", textMeasurer))
+                    drawText(measuredText("Habitacion 3", textMeasurer))
                 }
                 //Gallery 4 (border,rectangle and text)
                 drawPath(gallery4Path, Color(0xFF0D6A87))
@@ -157,7 +157,7 @@ fun CanvaPreview() {
                 withTransform({
                     translate(left = customWidth * 5.8f, top = customHeight * -12.3f)
                     rotate(degrees = 270F)
-                }) { drawText(measuredText("Galeria 4", textMeasurer)) }
+                }) { drawText(measuredText("Habitacion 4", textMeasurer)) }
 
                 //Gallery 5 (border,rectangle and text)
                 drawPath(gallery5Path, Color(0xFF820024))
@@ -165,7 +165,7 @@ fun CanvaPreview() {
                 withTransform({
                     translate(left = customWidth * 5.8f, top = customHeight * -8.8f)
                     rotate(degrees = 270F)
-                }) { drawText(measuredText("Galeria 5", textMeasurer), color = Color.LightGray) }
+                }) { drawText(measuredText("Habitacion 5", textMeasurer), color = Color.LightGray) }
 
                 //Gallery 6 (border,rectangle and text)
                 drawPath(gallery6Path, Color(0xFF00B8A3))
@@ -174,7 +174,7 @@ fun CanvaPreview() {
                 withTransform({
                     translate(left = customWidth * -5.7f, top = customHeight * 6.8f)
                     rotate(degrees = 90F)
-                }) { drawText(measuredText("Galeria 6", textMeasurer)) }
+                }) { drawText(measuredText("Habitacion 6", textMeasurer)) }
 
                 //Tree
                 drawPath(treePath1, Color(0xff454545))
@@ -355,7 +355,7 @@ fun MapMuseum(navController: NavController) {
             drawPath(gallery1Path, Color(0xFFDB073D))
             drawPath(gallery1Path, Color.Black, style = Stroke(width = 8f))
             translate(left = customWidth * 6.5f, top = customHeight * 0.5f) {
-                drawText(measuredText("Galeria 1", textMeasurer))
+                drawText(measuredText("Habitacion 1", textMeasurer))
             }
 
             //Gallery 2 (border,rectangle and text)
@@ -364,13 +364,13 @@ fun MapMuseum(navController: NavController) {
             withTransform({
                 translate(left = customWidth * -5.7f, top = customHeight * -2f)
                 rotate(degrees = 90F)
-            }) { drawText(measuredText("Galeria 2", textMeasurer)) }
+            }) { drawText(measuredText("Habitacion 2", textMeasurer)) }
 
             //Gallery 3 (border,rectangle and text)
             drawPath(gallery3Path, Color(0xFF8EC7D2))
             drawPath(gallery3Path, Color.Black, style = Stroke(width = 8f))
             translate(left = customWidth * 5.5f, top = customHeight * 6f) {
-                drawText(measuredText("Galeria 3", textMeasurer))
+                drawText(measuredText("Habitacion 3", textMeasurer))
             }
             //Gallery 4 (border,rectangle and text)
             drawPath(gallery4Path, Color(0xFF0D6A87))
@@ -378,7 +378,7 @@ fun MapMuseum(navController: NavController) {
             withTransform({
                 translate(left = customWidth * 5.8f, top = customHeight * -12.3f)
                 rotate(degrees = 270F)
-            }) { drawText(measuredText("Galeria 4", textMeasurer)) }
+            }) { drawText(measuredText("Habitacion 4", textMeasurer)) }
 
             //Gallery 5 (border,rectangle and text)
             drawPath(gallery5Path, Color(0xFF820024))
@@ -386,7 +386,7 @@ fun MapMuseum(navController: NavController) {
             withTransform({
                 translate(left = customWidth * 5.8f, top = customHeight * -8.8f)
                 rotate(degrees = 270F)
-            }) { drawText(measuredText("Galeria 5", textMeasurer), color = Color.LightGray) }
+            }) { drawText(measuredText("Habitacion 5", textMeasurer), color = Color.LightGray) }
 
             //Gallery 6 (border,rectangle and text)
             drawPath(gallery6Path, Color(0xFF00B8A3))
@@ -395,7 +395,7 @@ fun MapMuseum(navController: NavController) {
             withTransform({
                 translate(left = customWidth * -5.7f, top = customHeight * 6.8f)
                 rotate(degrees = 90F)
-            }) { drawText(measuredText("Galeria 6", textMeasurer)) }
+            }) { drawText(measuredText("Habitacion 6", textMeasurer)) }
 
             //Tree
             drawPath(treePath1, Color(0xff454545))
