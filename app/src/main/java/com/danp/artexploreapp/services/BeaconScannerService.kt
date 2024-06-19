@@ -290,7 +290,7 @@ class BeaconScannerService : Service() {
 
                 // Mantener la lista de RSSI limitada a los últimos 5 valores
                 if (rssiList.size > 10) {
-                    Log.e("ArtRoomViewModel", "Lleno se elimina" + rssiList.get(0) + " ingresa : " + parsedBeacon)
+//                    Log.e("ArtRoomViewModel", "Lleno se elimina" + rssiList.get(0) + " ingresa : " + parsedBeacon)
                     rssiList.removeAt(0) // Eliminar el valor más antiguo
                 }
 
