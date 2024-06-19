@@ -222,24 +222,56 @@ class BeaconScannerService : Service() {
 
     private val onScanResultAction: (ScanResult?) -> Unit = { result ->
         Log.d(TAG, "onScanResultAction")
-        Log.d(TAG, result.toString())
+//        Log.d(TAG, result.toString())
 
-//        val scanRecord = result?.scanRecord
-//        val beacon = Beacon(result?.device?.address).apply {
-//            manufacturer = result?.device?.name
-//            rssi = result?.rssi
-//        }
-//        Log.d(TAG, "Scan: $beacon")
-//
-//        scanRecord?.bytes?.let {
-//            val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
-//            txtMessage.text = parsedBeacon.toString()
-//            var distance = parsedBeacon.calculateDistance(parsedBeacon.txPower!!, parsedBeacon.rssi!!, 3.0)
-//            txtMessage.setText(txtMessage.text.toString() + "\n distance:\n$distance")
-//            var distanceAverageFilter = parsedBeacon.calculateDistanceAverageFilter(parsedBeacon.txPower!!, parsedBeacon.rssi!!, 3.0)
-//            txtMessage.setText(txtMessage.text.toString() + "\n distanceFilter:\n$distanceAverageFilter")
-
+        val scanRecord = result?.scanRecord
+        val beacon = Beacon(result?.device?.address).apply {
+            manufacturer = result?.device?.name
+            rssi = result?.rssi
         }
+        Log.d(TAG, "Scan: $beacon")
+
+        scanRecord?.bytes?.let {
+            val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
+
+            // Clave para identificar el beacon por su ID mayor y menor
+            val beaconId = "${parsedBeacon.major}-${parsedBeacon.minor}"
+
+            // Obtener o inicializar la lista de RSSI para este beacon
+            val rssiList = beaconRssiMap.getOrPut(beaconId) { mutableListOf() }
+
+            // Agregar el nuevo valor de RSSI a la lista
+            rssiList.add(parsedBeacon.rssi ?: 0)
+
+            // Mantener la lista de RSSI limitada a los últimos 5 valores
+            if (rssiList.size > 5) {
+                rssiList.removeAt(0) // Eliminar el valor más antiguo
+            }
+
+            // Actualizar la lista de todos los beacons escaneados (histórico)
+            updateScannedBeaconsList(parsedBeacon)
+            Log.d(TAG, "PARA Almacenar: $parsedBeacon")
+            // Actualizar la interfaz de usuario o realizar otras operaciones necesarias
+//            runOnUiThread {
+//                updateUIWithBeaconData(parsedBeacon, rssiList)
+//            }
+        }
+    }
+
+    private fun updateScannedBeaconsList(beacon: Beacon) {
+        // Verificar si el beacon ya está en la lista
+        val existingBeacon = scannedBeacons.find {
+            it.major == beacon.major && it.minor == beacon.minor
+        }
+
+        // Si no está en la lista, añadirlo
+        if (existingBeacon == null) {
+            scannedBeacons.add(beacon)
+        } else {
+            // Si está en la lista, actualizar sus datos (por ejemplo, RSSI más reciente)
+            existingBeacon.rssi = beacon.rssi
+        }
+    }
 
 
     private val onBatchScanResultAction: (MutableList<ScanResult>?) -> Unit = {
