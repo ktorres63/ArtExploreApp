@@ -42,4 +42,10 @@ class Beacon(
         return distance;
 
     }
+    fun calculateDistance(N: Double = 3.0): Double {
+        val factor = (this.txPower!! - this.rssi!!) / (10 * N)
+        val distance = Math.pow(10.0, factor)
+        return distance;
+
+    }
 }

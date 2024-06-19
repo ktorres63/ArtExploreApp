@@ -27,14 +27,14 @@ class BeaconScannerService : Service() {
     private val TAG = "BeaconScannerService"
     private val binder = MyBinder()
 
-    private var currentGallery: String? = "Galeria Actual - ejemplo"
-    private var nearestPainting: String? = "Pintura cercada - ejemplo"
+    private var currentGallery: String? = ""
+    private var nearestPainting: String? = ""
+    private var nearestBeacon : Beacon? = null
 
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var btScanner: BluetoothLeScanner
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var context: Context // Contexto del servicio
-//    private val permissionManager = PermissionManager.from()
 
     // HashMap para almacenar los últimos 5 valores de RSSI por beacon
     private val beaconRssiMap = HashMap<String, MutableList<Int>>()
@@ -186,7 +186,9 @@ class BeaconScannerService : Service() {
     // Metodos publicos
     fun getNearestPainting(): String? {
         handleBeacons(recentBeacons)
-        return nearestPainting
+        val beaconId = "${nearestBeacon?.major}-${nearestBeacon?.minor}"
+        val hisotiral = beaconRssiMap.get(beaconId)
+        return nearestPainting + hisotiral.toString()
     }
 
     // metodos auxiciliares
@@ -206,12 +208,43 @@ class BeaconScannerService : Service() {
     }
 
     private fun handleBeacons(beacons: Collection<Beacon>) {
-        // Implementa la lógica para determinar la galería y la pintura más cercana
-        // Ejemplo simplificado:
+
+        // Obtener el major más frecuente y cercano
+        val mostFrequentMajor = getMostFrequentMajor(recentBeacons)
+
+        if (mostFrequentMajor != null) {
+            // Obtener el minor más cercano dentro del major más frecuente
+            nearestBeacon = getNearestBeaconWithMajor(recentBeacons, mostFrequentMajor)
+
+            nearestBeacon?.let {
+                val major = it.major
+                val minor = it.minor
+                if (major != null && minor != null) {
+                    currentGallery = major.toString()
+                    nearestPainting = getPaintingFromMinor(major, minor)
+                }
+            }
+        }
+    }
+
+    private fun getMostFrequentMajor(beacons: List<Beacon>): Int? {
+        // Contar las apariciones de cada major en los beacons recientes
+        val majorCountMap = beacons.groupingBy { it.major }.eachCount()
+
+        // Encontrar el major con mayor frecuencia
+        return majorCountMap.maxByOrNull { it.value }?.key
+    }
+
+    private fun getNearestBeaconWithMajor(beacons: List<Beacon>, major: Int): Beacon? {
+        // Filtrar los beacons con el major especificado
+        val filteredBeacons = beacons.filter { it.major == major }
+
+        // Encontrar el beacon más cercano con el major especificado
         var closestBeacon: Beacon? = null
         var closestDistance = Double.MAX_VALUE
-        for (beacon in beacons) {
-            val distance = beacon.calculateDistance(beacon.txPower!!, beacon.rssi!!, 3.0);
+
+        for (beacon in filteredBeacons) {
+            val distance = beacon.calculateDistance(beacon.txPower!!, beacon.rssi!!, 3.0)
             if (distance != null) {
                 if (distance < closestDistance) {
                     closestDistance = distance
@@ -220,14 +253,7 @@ class BeaconScannerService : Service() {
             }
         }
 
-        closestBeacon?.let {
-            val major = it.major
-            val minor = it.minor
-            if(major!= null && minor!=null){
-                currentGallery = major.toString()
-                nearestPainting = getPaintingFromMinor(major, minor)
-            }
-        }
+        return closestBeacon
     }
 
     private fun createBleScanCallback(): BleScanCallback {
@@ -248,27 +274,35 @@ class BeaconScannerService : Service() {
             rssi = result?.rssi
         }
         Log.d(TAG, "Scan: $beacon")
+        val rssiThreshold = -100 // Ejemplo: Ignorar señales con RSSI menor a -100 dBm
 
-        scanRecord?.bytes?.let {
-            val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
+        // Verificar si el RSSI es mayor al umbral
+        if (beacon.rssi != null && beacon.rssi!! >= rssiThreshold) {
+            scanRecord?.bytes?.let {
+                val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
 
-            // Clave para identificar el beacon por su ID mayor y menor
-            val beaconId = "${parsedBeacon.major}-${parsedBeacon.minor}"
+                // Clave para identificar el beacon por su ID mayor y menor
+                val beaconId = "${parsedBeacon.major}-${parsedBeacon.minor}"
 
-            // Obtener o inicializar la lista de RSSI para este beacon
-            val rssiList = beaconRssiMap.getOrPut(beaconId) { mutableListOf() }
+                // Obtener o inicializar la lista de RSSI para este beacon
+                val rssiList = beaconRssiMap.getOrPut(beaconId) { mutableListOf() }
 
-            // Agregar el nuevo valor de RSSI a la lista
-            rssiList.add(parsedBeacon.rssi ?: 0)
+                // Agregar el nuevo valor de RSSI a la lista
+                rssiList.add(parsedBeacon.rssi ?: 0)
 
-            // Mantener la lista de RSSI limitada a los últimos 5 valores
-            if (rssiList.size > 5) {
-                rssiList.removeAt(0) // Eliminar el valor más antiguo
+                // Mantener la lista de RSSI limitada a los últimos 5 valores
+                if (rssiList.size > 10) {
+                    Log.e("ArtRoomViewModel", "Lleno se elimina" + rssiList.get(0) + " ingresa : " + parsedBeacon)
+                    rssiList.removeAt(0) // Eliminar el valor más antiguo
+                }
+
+                // Actualizar la lista de todos los beacons escaneados (histórico)
+                updateScannedBeaconsList(parsedBeacon)
+                Log.d(TAG, "PARA Almacenar: $parsedBeacon")
+
             }
-
-            // Actualizar la lista de todos los beacons escaneados (histórico)
-            updateScannedBeaconsList(parsedBeacon)
-            Log.d(TAG, "PARA Almacenar: $parsedBeacon")
+        }else{
+            Log.d(TAG, "Beacon ignorado por señal débil: $beacon")
 
         }
     }
