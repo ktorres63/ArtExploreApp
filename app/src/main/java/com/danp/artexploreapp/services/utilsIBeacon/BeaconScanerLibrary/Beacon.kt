@@ -1,5 +1,7 @@
 package com.idnp2024a.beaconscanner.BeaconScanerLibrary
 
+import android.util.Log
+
 class Beacon(
     val macAddress: String?,
     var manufacturer: String? = null,
@@ -11,8 +13,10 @@ class Beacon(
     var instance: String? = null,
     var rssi: Int? = null,
     var txPower: Int? = null,
-    var timestamp: Long = System.currentTimeMillis() // Añadir el timestamp
+    var timestamp: Long = System.currentTimeMillis(), // Añadir el timestamp
+    var distance: Double? = 0.0
 ) {
+    val TAG = "Beacon"
     enum class BeaconType {
         IBEACON, EDDYSTONE_UID, ANY
     }
@@ -25,9 +29,6 @@ class Beacon(
     }
 
 //    private val movingAverageFilter = MovingAverageFilter(5)
-    fun calculateDistanceAverageFilter(txPower: Int, rssi: Int, n: Double): Double? {
-        return MovingAverageFilter.calculateDistance(txPower, rssi, n)
-    }
 
     override fun hashCode(): Int {
         return uuid?.hashCode() ?: 0
@@ -48,4 +49,24 @@ class Beacon(
         return distance;
 
     }
+
+
+    fun calculateDistanceAverageFilter(txPower: Int, rssi: Int, N: Double, rssiHistory: MutableList<Int>): Double {
+        // Calcular el promedio de los valores de RSSI en el historial y el nuevo valor de RSSI
+        val allRssiValues = rssiHistory + rssi
+        val averageRssi = allRssiValues.average()
+
+        // Calcular el factor basado en txPower y el promedio de RSSI
+        val factor = (txPower - averageRssi) / (10 * N)
+
+        // Calcular la distancia usando la fórmula de atenuación de la señal
+        val distance = Math.pow(10.0, factor)
+
+        // Imprimir en el log el promedio de RSSI y la distancia calculada
+        Log.d(TAG, "Using moving filter: averageRssi=$averageRssi, distance=$distance")
+
+        this.distance = distance
+        return distance
+    }
+
 }

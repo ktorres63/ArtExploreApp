@@ -48,6 +48,7 @@ class BeaconScannerService : Service() {
     private val beaconCleanerRunnable = object : Runnable {
         override fun run() {
             cleanRecentBeaconsList()
+
             handler.postDelayed(this, 500) // Repetir cada segundo
         }
     }
@@ -180,31 +181,26 @@ class BeaconScannerService : Service() {
     // Metodo publicos
     fun getCurrentGallery(): String? {
         handleBeacons(recentBeacons)
-        return currentGallery
+        val gallery = currentGallery
+        currentGallery = null  // Limpiar la variable currentGallery
+        nearestPainting = null  // Limpiar la variable nearestPainting
+        return gallery
     }
 
     // Metodos publicos
     fun getNearestPainting(): String? {
+//        handleBeacons(recentBeacons)
         handleBeacons(recentBeacons)
-        val beaconId = "${nearestBeacon?.major}-${nearestBeacon?.minor}"
-        val hisotiral = beaconRssiMap.get(beaconId)
-        return nearestPainting + hisotiral.toString()
+        val painting = nearestPainting
+        currentGallery = null  // Limpiar la variable currentGallery
+        nearestPainting = null  // Limpiar la variable nearestPainting
+        return painting
     }
 
-    // metodos auxiciliares
-    private fun getGalleryFromMajor(major: Int?): String {
-        // Implementa la lógica para mapear Major a galerías
-        return when (major) {
-            1 -> "Galería A"
-            2 -> "Galería B"
-            3 -> "Galería C"
-            else -> "Desconocido"
-        }
-    }
 
     private fun getPaintingFromMinor(major: Int, minor: Int): String {
         // Implementa la lógica para mapear Minor a pinturas específicas dentro de una galería
-        return "Pintura $minor en Galería $major"
+        return "Pintura $minor en Galería $major , distance ${nearestBeacon?.distance}"
     }
 
     private fun handleBeacons(beacons: Collection<Beacon>) {
@@ -244,7 +240,9 @@ class BeaconScannerService : Service() {
         var closestDistance = Double.MAX_VALUE
 
         for (beacon in filteredBeacons) {
-            val distance = beacon.calculateDistance(beacon.txPower!!, beacon.rssi!!, 3.0)
+            val beaconId = "${beacon.major}-${beacon.minor}"
+
+            val distance = beacon.calculateDistanceAverageFilter(beacon.txPower!!, beacon.rssi!!, 3.0, beaconRssiMap.get(beaconId)!!)
             if (distance != null) {
                 if (distance < closestDistance) {
                     closestDistance = distance
