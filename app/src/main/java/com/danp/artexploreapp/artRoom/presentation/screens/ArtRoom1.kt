@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -32,7 +34,10 @@ fun Room1(navController: NavController,viewModel: ArtRoomViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
+    val switchState = viewModel.switchState
 
+    // set contex
+    viewModel.setContex(LocalContext.current)
 
     val colorBackground = Color.White
     val (screenWidth, screenHeight) = getScreenDimensions()
@@ -44,6 +49,19 @@ fun Room1(navController: NavController,viewModel: ArtRoomViewModel) {
             .background(colorBackground),
         contentAlignment = Alignment.BottomCenter
     ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Switch(
+                checked = switchState,
+                onCheckedChange = { isChecked ->
+                    viewModel.onChangeSwitchState(isChecked)
+                },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        
         IconBox(
             viewModel = viewModel,
             offsetX = iconBoxOffsetX1,
