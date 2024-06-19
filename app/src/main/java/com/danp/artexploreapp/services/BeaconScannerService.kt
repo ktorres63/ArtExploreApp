@@ -12,7 +12,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Binder
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.Beacon
@@ -41,6 +43,20 @@ class BeaconScannerService : Service() {
     private val recentBeacons = mutableListOf<Beacon>()
     private var scanCallBack: BleScanCallback? = null;
 
+    // Handler y Runnable para limpiar la lista de beacons recientes
+    private val handler = Handler(Looper.getMainLooper())
+    private val beaconCleanerRunnable = object : Runnable {
+        override fun run() {
+            cleanRecentBeaconsList()
+            handler.postDelayed(this, 500) // Repetir cada segundo
+        }
+    }
+
+    private fun cleanRecentBeaconsList() {
+        // Limitar el tamaño de la lista de recientes (ejemplo: últimos 3 segundos)
+        val currentTime = System.currentTimeMillis()
+        recentBeacons.removeIf { currentTime - it.timestamp > 2 * 1000 }    }
+
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "OnCreate BeaconScannerService")
@@ -49,6 +65,7 @@ class BeaconScannerService : Service() {
         scanCallBack  = createBleScanCallback();
 
         startScannerBeacons(scanCallBack!!)
+        handler.post(beaconCleanerRunnable) // Iniciar el Runnable
 
     }
 
@@ -120,6 +137,9 @@ class BeaconScannerService : Service() {
         if(scanCallBack !=null) {
             bluetoothScanStop(scanCallBack!!)
         }
+
+        handler.removeCallbacks(beaconCleanerRunnable) // Detener el Runnable
+
 
     }
 
@@ -270,9 +290,7 @@ class BeaconScannerService : Service() {
             existingBeacon.timestamp = beacon.timestamp
         }
 //
-        // Limitar el tamaño de la lista de recientes (ejemplo: últimos 3 segundos)
-        val currentTime = System.currentTimeMillis()
-        recentBeacons.removeIf { currentTime - it.timestamp > 3 * 1000 }
+        cleanRecentBeaconsList()
 
     }
 
