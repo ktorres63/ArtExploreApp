@@ -11,8 +11,8 @@ class BeaconScannerService : Service() {
     private val TAG = "BeaconScannerService"
     private val binder = MyBinder()
 
-    private var currentGallery: String? = null
-    private var nearestPainting: String? = null
+    private var currentGallery: String? = "Galeria Actual - ejemplo"
+    private var nearestPainting: String? = "Pintura cercada - ejemplo"
 
 
 
