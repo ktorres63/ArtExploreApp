@@ -85,7 +85,7 @@ class BeaconScannerService : Service() {
             return
 
 //        val scanCallBack  = createBleScanCallback();
-        Log.i(TAG, "Press start scan button");
+        Log.i(TAG, "Start scanning");
         if (!isLocationEnabled() || !isBluetoothEnabled()) {
             Log.d(TAG, "Servicios no activados - La localizacion y el Bluetooth tienen que estar activos");
             return
@@ -179,13 +179,14 @@ class BeaconScannerService : Service() {
 
     // Metodo publicos
     fun getCurrentGallery(): String? {
-        return recentBeacons.toString()
-
+        handleBeacons(recentBeacons)
+        return currentGallery
     }
 
     // Metodos publicos
     fun getNearestPainting(): String? {
-        return recentBeacons.size.toString()
+        handleBeacons(recentBeacons)
+        return nearestPainting
     }
 
     // metodos auxiciliares
@@ -223,7 +224,7 @@ class BeaconScannerService : Service() {
             val major = it.major
             val minor = it.minor
             if(major!= null && minor!=null){
-                currentGallery = getGalleryFromMajor(major)
+                currentGallery = major.toString()
                 nearestPainting = getPaintingFromMinor(major, minor)
             }
         }
