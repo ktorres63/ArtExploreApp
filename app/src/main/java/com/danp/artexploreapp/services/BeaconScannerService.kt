@@ -118,8 +118,9 @@ class BeaconScannerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy BeaconScannerService")
-//        bluetoothScanStop()
-
+        if(scanCallBack !=null) {
+            bluetoothScanStop(scanCallBack!!)
+        }
 
     }
 
@@ -148,14 +149,14 @@ class BeaconScannerService : Service() {
 //
 
 //
-//    private fun bluetoothScanStop(bleScanCallback: BleScanCallback) {
-//        Log.d(TAG, "Stopping Bluetooth scan...")
-//        if (btScanner != null) {
-//            btScanner.stopScan(bleScanCallback)
-//        } else {
-//            Log.d(TAG, "BluetoothLeScanner is null")
-//        }
-//    }
+    private fun bluetoothScanStop(bleScanCallback: BleScanCallback) {
+        Log.d(TAG, "Stopping Bluetooth scan...")
+        if (btScanner != null) {
+            btScanner.stopScan(bleScanCallback)
+        } else {
+            Log.d(TAG, "BluetoothLeScanner is null")
+        }
+    }
 
 
 
