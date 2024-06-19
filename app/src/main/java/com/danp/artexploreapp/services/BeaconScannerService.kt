@@ -38,7 +38,7 @@ class BeaconScannerService : Service() {
     private val beaconRssiMap = HashMap<String, MutableList<Int>>()
 
     // Lista para almacenar todos los beacons escaneados
-    private val scannedBeacons = ArrayList<Beacon>()
+    private val recentBeacons = mutableListOf<Beacon>()
     private var scanCallBack: BleScanCallback? = null;
 
     override fun onCreate() {
@@ -49,7 +49,6 @@ class BeaconScannerService : Service() {
         scanCallBack  = createBleScanCallback();
 
         startScannerBeacons(scanCallBack!!)
-//        checkPermissions()
 
     }
 
@@ -131,27 +130,24 @@ class BeaconScannerService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return binder
     }
-//
-//
-//    private fun startScanTimer() {
-//        timer = Timer()
-//        timer?.scheduleAtFixedRate(object : TimerTask() {
-//            override fun run() {
-//                // Ejecutar el escaneo cada vez que se invoque el temporizador
-//                if (isBluetoothEnabled() && isLocationEnabled()) {
-//                    bluetoothScanStart(createBleScanCallback())
-//                } else {
-//                    Log.d(TAG, "Bluetooth or Location service is not enabled.")
-//                }
-//            }
-//        }, 0, scanInterval)
-//    }
-//
 
-//
     private fun bluetoothScanStop(bleScanCallback: BleScanCallback) {
         Log.d(TAG, "Stopping Bluetooth scan...")
         if (btScanner != null) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
             btScanner.stopScan(bleScanCallback)
         } else {
             Log.d(TAG, "BluetoothLeScanner is null")
@@ -163,12 +159,13 @@ class BeaconScannerService : Service() {
 
     // Metodo publicos
     fun getCurrentGallery(): String? {
-        return currentGallery
+        return recentBeacons.toString()
+
     }
 
     // Metodos publicos
     fun getNearestPainting(): String? {
-        return nearestPainting
+        return recentBeacons.size.toString()
     }
 
     // metodos auxiciliares
@@ -193,7 +190,7 @@ class BeaconScannerService : Service() {
         var closestBeacon: Beacon? = null
         var closestDistance = Double.MAX_VALUE
         for (beacon in beacons) {
-            val distance = beacon.distance
+            val distance = beacon.calculateDistance(beacon.txPower!!, beacon.rssi!!, 3.0);
             if (distance != null) {
                 if (distance < closestDistance) {
                     closestDistance = distance
@@ -251,26 +248,32 @@ class BeaconScannerService : Service() {
             // Actualizar la lista de todos los beacons escaneados (histórico)
             updateScannedBeaconsList(parsedBeacon)
             Log.d(TAG, "PARA Almacenar: $parsedBeacon")
-            // Actualizar la interfaz de usuario o realizar otras operaciones necesarias
-//            runOnUiThread {
-//                updateUIWithBeaconData(parsedBeacon, rssiList)
-//            }
+
         }
     }
 
     private fun updateScannedBeaconsList(beacon: Beacon) {
-        // Verificar si el beacon ya está en la lista
-        val existingBeacon = scannedBeacons.find {
+        // Actualizar el timestamp del beacon
+        beacon.timestamp = System.currentTimeMillis()
+
+        // Verificar si el beacon ya está en la lista de recientes
+        val existingBeacon = recentBeacons.find {
             it.major == beacon.major && it.minor == beacon.minor
         }
 
-        // Si no está en la lista, añadirlo
         if (existingBeacon == null) {
-            scannedBeacons.add(beacon)
+            // Si no está en la lista, añadirlo
+            recentBeacons.add(beacon)
         } else {
-            // Si está en la lista, actualizar sus datos (por ejemplo, RSSI más reciente)
+            // Si está en la lista, actualizar sus datos
             existingBeacon.rssi = beacon.rssi
+            existingBeacon.timestamp = beacon.timestamp
         }
+//
+        // Limitar el tamaño de la lista de recientes (ejemplo: últimos 3 segundos)
+        val currentTime = System.currentTimeMillis()
+        recentBeacons.removeIf { currentTime - it.timestamp > 3 * 1000 }
+
     }
 
 

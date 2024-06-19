@@ -11,7 +11,7 @@ class Beacon(
     var instance: String? = null,
     var rssi: Int? = null,
     var txPower: Int? = null,
-    var distance: Double? = 0.0
+    var timestamp: Long = System.currentTimeMillis() // Añadir el timestamp
 ) {
     enum class BeaconType {
         IBEACON, EDDYSTONE_UID, ANY
@@ -36,7 +36,7 @@ class Beacon(
         return "Beacon(macAddress=$macAddress, manufacturer=$manufacturer, type=$type, uuid=$uuid, major=$major, minor=$minor, rssi=$rssi, TxPower=$txPower)"
     }
 
-    fun calculateDistance(txPower: Int, rssi: Int, N: Double): Any {
+    fun calculateDistance(txPower: Int, rssi: Int, N: Double): Double {
         val factor = (txPower - rssi) / (10 * N)
         val distance = Math.pow(10.0, factor)
         return distance;

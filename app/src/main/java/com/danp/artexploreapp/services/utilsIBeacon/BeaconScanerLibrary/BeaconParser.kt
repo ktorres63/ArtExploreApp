@@ -29,7 +29,6 @@ class BeaconParser {
                 minor = minor,
                 rssi = rssi,
                 txPower = txPower,
-                distance = 0.0
             )
         }
     }
