@@ -1,5 +1,6 @@
 package com.danp.artexploreapp.services
 
+import android.Manifest
 import android.app.Service
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -9,9 +10,11 @@ import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.Beacon
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.BeaconParser
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.BleScanCallback
@@ -31,15 +34,21 @@ class BeaconScannerService : Service() {
     private lateinit var context: Context // Contexto del servicio
 //    private val permissionManager = PermissionManager.from()
 
+    // HashMap para almacenar los últimos 5 valores de RSSI por beacon
+    private val beaconRssiMap = HashMap<String, MutableList<Int>>()
 
-
+    // Lista para almacenar todos los beacons escaneados
+    private val scannedBeacons = ArrayList<Beacon>()
+    private var scanCallBack: BleScanCallback? = null;
 
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "OnCreate BeaconScannerService")
         context = applicationContext // Asignar el contexto de la aplicación
         initBluetooth()
-        startScannerBeacons()
+        scanCallBack  = createBleScanCallback();
+
+        startScannerBeacons(scanCallBack!!)
 //        checkPermissions()
 
     }
@@ -55,18 +64,42 @@ class BeaconScannerService : Service() {
         }
     }
 
-    private fun startScannerBeacons(){
+    private fun startScannerBeacons(scanCallBack:BleScanCallback ){
         if(btScanner == null)
             return
 
-        val scanCallBack  = createBleScanCallback();
+//        val scanCallBack  = createBleScanCallback();
         Log.i(TAG, "Press start scan button");
         if (!isLocationEnabled() || !isBluetoothEnabled()) {
             Log.d(TAG, "Servicios no activados - La localizacion y el Bluetooth tienen que estar activos");
             return
         }
 
-        bluetoothScanStart(scanCallBack)
+        val scanFilter = ScanFilter.Builder()
+            .setManufacturerData(0x004C, byteArrayOf(0x02, 0x15)) // Ejemplo para iBeacon
+            .build()
+        val scanSettings = ScanSettings.Builder()
+            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+            .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
+            .build()
+
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        btScanner.startScan(listOf(scanFilter), scanSettings,scanCallBack)
+
     }
 
 
@@ -81,81 +114,11 @@ class BeaconScannerService : Service() {
         return bluetoothAdapter.isEnabled
     }
 
-//    private fun bluetoothScanStart(bleScanCallback: BleScanCallback) {
-//        Log.d(TAG, "Starting Bluetooth scan...")
-//        if (btScanner != null) {
-//            permissionManager
-//                .request(Permission.Bluetooth)
-//                .rationale("Bluetooth permission is needed")
-//                .checkPermission { isGranted ->
-//                    if (isGranted) {
-//                        Log.d(TAG, "Permissions granted, starting scan.")
-//                        val scanFilter = ScanFilter.Builder()
-//                            .setManufacturerData(
-//                                0x004C,
-//                                byteArrayOf(0x02, 0x15)
-//                            ) // Ejemplo para iBeacon
-//                            .build()
-//                        val scanSettings = ScanSettings.Builder()
-//                            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-//                            .build()
-//                        btScanner.startScan(listOf(scanFilter), scanSettings, bleScanCallback)
-//                    } else {
-//                        Log.d(TAG, "Bluetooth permission not granted.")
-//                    }
-//                }
-//        } else {
-//            Log.d(TAG, "BluetoothLeScanner is null")
-//        }
-//    }
-private fun bluetoothScanStart(bleScanCallback: BleScanCallback) {
-    Log.d(TAG, "Starting Bluetooth scan...")
-
-
-    Log.d(TAG, "Permissions granted, starting scan.")
-
-    val scanFilter = ScanFilter.Builder()
-        .setManufacturerData(
-            0x004C,
-            byteArrayOf(0x02, 0x15)
-        ) // Ejemplo para iBeacon
-        .build()
-
-    val scanSettings = ScanSettings.Builder()
-        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-        .build()
-
-    btScanner.startScan(listOf(scanFilter), scanSettings, bleScanCallback)
-
-
-}
-
-//
-//    private fun checkPermissions() {
-//        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-//            != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            // Si el permiso no está concedido, solicitarlo
-//            requestPermissions()
-//        } else {
-//            // Si el permiso está concedido, continuar con la inicialización
-//            initBluetooth()
-//        }
-//    }
-//
-//    private fun requestPermissions() {
-//        // Solicitar permiso de ubicación
-////        ActivityCompat.requestPermissions(
-//            // Aquí podrías usar una actividad para solicitar los permisos, pero en este caso
-//            // se solicitará el permiso al inicio del servicio y se continuará con la inicialización
-//            // si el permiso es concedido
-////        )
-//    }
-//
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy BeaconScannerService")
+//        bluetoothScanStop()
 
 
     }
