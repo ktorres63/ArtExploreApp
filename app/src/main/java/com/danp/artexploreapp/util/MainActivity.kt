@@ -9,12 +9,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.danp.artexploreapp.services.utilsIBeacon.PermissionManager
 import com.danp.artexploreapp.ui.theme.ArtExploreAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+//        private val permissionManager = PermissionManager.from(this)
+
         setContent {
             val navController = rememberNavController()
             ArtExploreAppTheme {

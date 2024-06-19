@@ -9,21 +9,13 @@ import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.danp.artexploreapp.services.utilsIBeacon.Permission
-import com.danp.artexploreapp.services.utilsIBeacon.PermissionManager
-import com.danp.artexploreapp.util.MainActivity
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.Beacon
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.BeaconParser
 import com.idnp2024a.beaconscanner.BeaconScanerLibrary.BleScanCallback
-import com.idnp2024a.beaconscanner.permissions.BTPermissions
-import java.util.Timer
-import java.util.TimerTask
+
 
 class BeaconScannerService : Service() {
 
@@ -37,7 +29,7 @@ class BeaconScannerService : Service() {
     private lateinit var btScanner: BluetoothLeScanner
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var context: Context // Contexto del servicio
-    private val permissionManager = PermissionManager.from()
+//    private val permissionManager = PermissionManager.from()
 
 
 
@@ -89,33 +81,54 @@ class BeaconScannerService : Service() {
         return bluetoothAdapter.isEnabled
     }
 
-    private fun bluetoothScanStart(bleScanCallback: BleScanCallback) {
-        Log.d(TAG, "Starting Bluetooth scan...")
-        if (btScanner != null) {
-            permissionManager
-                .request(Permission.Bluetooth)
-                .rationale("Bluetooth permission is needed")
-                .checkPermission { isGranted ->
-                    if (isGranted) {
-                        Log.d(TAG, "Permissions granted, starting scan.")
-                        val scanFilter = ScanFilter.Builder()
-                            .setManufacturerData(
-                                0x004C,
-                                byteArrayOf(0x02, 0x15)
-                            ) // Ejemplo para iBeacon
-                            .build()
-                        val scanSettings = ScanSettings.Builder()
-                            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                            .build()
-                        btScanner.startScan(listOf(scanFilter), scanSettings, bleScanCallback)
-                    } else {
-                        Log.d(TAG, "Bluetooth permission not granted.")
-                    }
-                }
-        } else {
-            Log.d(TAG, "BluetoothLeScanner is null")
-        }
-    }
+//    private fun bluetoothScanStart(bleScanCallback: BleScanCallback) {
+//        Log.d(TAG, "Starting Bluetooth scan...")
+//        if (btScanner != null) {
+//            permissionManager
+//                .request(Permission.Bluetooth)
+//                .rationale("Bluetooth permission is needed")
+//                .checkPermission { isGranted ->
+//                    if (isGranted) {
+//                        Log.d(TAG, "Permissions granted, starting scan.")
+//                        val scanFilter = ScanFilter.Builder()
+//                            .setManufacturerData(
+//                                0x004C,
+//                                byteArrayOf(0x02, 0x15)
+//                            ) // Ejemplo para iBeacon
+//                            .build()
+//                        val scanSettings = ScanSettings.Builder()
+//                            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+//                            .build()
+//                        btScanner.startScan(listOf(scanFilter), scanSettings, bleScanCallback)
+//                    } else {
+//                        Log.d(TAG, "Bluetooth permission not granted.")
+//                    }
+//                }
+//        } else {
+//            Log.d(TAG, "BluetoothLeScanner is null")
+//        }
+//    }
+private fun bluetoothScanStart(bleScanCallback: BleScanCallback) {
+    Log.d(TAG, "Starting Bluetooth scan...")
+
+
+    Log.d(TAG, "Permissions granted, starting scan.")
+
+    val scanFilter = ScanFilter.Builder()
+        .setManufacturerData(
+            0x004C,
+            byteArrayOf(0x02, 0x15)
+        ) // Ejemplo para iBeacon
+        .build()
+
+    val scanSettings = ScanSettings.Builder()
+        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+        .build()
+
+    btScanner.startScan(listOf(scanFilter), scanSettings, bleScanCallback)
+
+
+}
 
 //
 //    private fun checkPermissions() {
@@ -245,16 +258,17 @@ class BeaconScannerService : Service() {
 
     private val onScanResultAction: (ScanResult?) -> Unit = { result ->
         Log.d(TAG, "onScanResultAction")
+        Log.d(TAG, result.toString())
 
-        val scanRecord = result?.scanRecord
-        val beacon = Beacon(result?.device?.address).apply {
-            manufacturer = result?.device?.name
-            rssi = result?.rssi
-        }
-        Log.d(TAG, "Scan: $beacon")
-
-        scanRecord?.bytes?.let {
-            val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
+//        val scanRecord = result?.scanRecord
+//        val beacon = Beacon(result?.device?.address).apply {
+//            manufacturer = result?.device?.name
+//            rssi = result?.rssi
+//        }
+//        Log.d(TAG, "Scan: $beacon")
+//
+//        scanRecord?.bytes?.let {
+//            val parsedBeacon = BeaconParser.parseIBeacon(it, beacon.rssi)
 //            txtMessage.text = parsedBeacon.toString()
 //            var distance = parsedBeacon.calculateDistance(parsedBeacon.txPower!!, parsedBeacon.rssi!!, 3.0)
 //            txtMessage.setText(txtMessage.text.toString() + "\n distance:\n$distance")
@@ -262,7 +276,7 @@ class BeaconScannerService : Service() {
 //            txtMessage.setText(txtMessage.text.toString() + "\n distanceFilter:\n$distanceAverageFilter")
 
         }
-    }
+
 
     private val onBatchScanResultAction: (MutableList<ScanResult>?) -> Unit = {
         Log.d(TAG, "BatchScanResult: ${it.toString()}")
