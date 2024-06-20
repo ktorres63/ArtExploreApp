@@ -276,7 +276,7 @@ fun MapMuseum(navController: NavController) {
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = { offset ->
-                        scope.launch {//Completar con el mapa verdadero de la galería (karlo )
+                        scope.launch {
                             val height: Float = 1383 / 23F
                             val width: Float = 702 / 11f
                             Log.i("asd", "Círculo tocado en $offset")
@@ -288,8 +288,7 @@ fun MapMuseum(navController: NavController) {
 //                            X =  702.0... 255.27272
 //                            Y= 0.0 ... 120.26087
                             if ((offset.x > 255 && offset.x <702) && (offset.y >0 && offset.y<120)) {
-                                //navController.navigate(Screens.ScreenSettings.route)
-                                Log.i("asdf", "Sala 1")
+
                                 navController.navigate(Screens.ScreenRoom1Map.route)
 
                             }
@@ -303,8 +302,8 @@ fun MapMuseum(navController: NavController) {
             val customHeight = size.height / 23f
             val customWidth = size.width / 11f
 
-            Log.i("qwe", "Height = ${size.height}")
-            Log.i("qwe", "Width = ${size.width}")
+            Log.i("height", "Height = ${size.height}")
+            Log.i("width", "Width = ${size.width}")
             val treePath1 = pathToRectangles(
                 customWidth, customHeight, 4.5f, 18.5f, 7.5f, 21f,
             )

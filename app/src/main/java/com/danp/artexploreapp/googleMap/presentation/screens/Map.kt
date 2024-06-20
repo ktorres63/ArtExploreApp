@@ -26,11 +26,7 @@ fun Map(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Map", fontSize = 30.sp, color = GreenJC)
-            Button(onClick = {
-                navController.navigate(Screens.ScreenMapMuseum.route)
-            }) {
-                Text(text = "Museo Unsa")
-            }
+
         }
 
     }

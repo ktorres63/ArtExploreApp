@@ -68,7 +68,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     //Navigation
-    implementation ("androidx.navigation:navigation-compose:2.7.6")
+    implementation (libs.androidx.navigation.compose)
 
 }
