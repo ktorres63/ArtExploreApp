@@ -72,4 +72,14 @@ dependencies {
     //Navigation
     implementation ("androidx.navigation:navigation-compose:2.7.6")
 
+    //Google Maps Service : Maps compose
+    implementation("com.google.maps.android:maps-compose:2.11.5")
+
+    // Maps SDK for Android
+    implementation("com.google.android.gms:play-services-maps:18.2.0") //agregado google map
+    implementation("com.google.android.gms:play-services-location:21.0.1") //agregado
+    implementation("com.google.maps.android:android-maps-utils:3.4.0") //agregado google map utils
+
+    implementation("com.google.accompanist:accompanist-permissions:0.19.0") // o la versión que desees
+
 }

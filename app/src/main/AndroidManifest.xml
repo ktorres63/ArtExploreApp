@@ -25,7 +25,9 @@
             android:name=".services.BeaconScannerService"
             android:enabled="true"
             android:exported="true"></service>
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCwuWSHFpr1Em2PD9Vk-hwKdcM5710qVv0"/>
         <activity
             android:name=".util.MainActivity"
             android:exported="true"
