@@ -84,5 +84,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation("com.google.accompanist:accompanist-permissions:0.19.0") // o la versión que desees
 
-
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation ("com.squareup.picasso:picasso:2.8")
 }
