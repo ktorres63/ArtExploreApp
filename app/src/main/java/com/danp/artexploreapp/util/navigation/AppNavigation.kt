@@ -25,7 +25,7 @@ import com.danp.artexploreapp.settings.presentation.screens.Settings
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
-    NavHost(navController = navController, startDestination = Screens.ScreenHome.route) {
+    NavHost(navController = navController, startDestination = Screens.ScreenMapMuseum.route) { // TODO cambiar a login o home
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
         composable(route = Screens.ScreenSignUp.route) { SignUp(navController) }
         composable(route = Screens.ScreenHome.route) { Home(navController) }
