@@ -26,6 +26,9 @@
             android:enabled="true"
             android:exported="true"
             android:permission="TODO" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCwuWSHFpr1Em2PD9Vk-hwKdcM5710qVv0"/>
 
         <activity
             android:name=".util.MainActivity"
