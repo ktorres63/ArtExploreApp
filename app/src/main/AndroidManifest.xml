@@ -24,7 +24,8 @@
         <service
             android:name=".services.BeaconScannerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:permission="TODO" />
 
         <activity
             android:name=".util.MainActivity"
