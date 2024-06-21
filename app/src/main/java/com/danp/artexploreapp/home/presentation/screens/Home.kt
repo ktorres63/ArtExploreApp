@@ -26,9 +26,7 @@ import com.danp.artexploreapp.util.MyTopBar
 fun Home(navController: NavController) {
     Scaffold(
         topBar = { MyTopBar(navController = navController, "Home", true)}
-
         ) { ip ->
-
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(ip)) {
