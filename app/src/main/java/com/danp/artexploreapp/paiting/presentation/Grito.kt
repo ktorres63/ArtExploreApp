@@ -34,7 +34,7 @@ fun Grito(viewModel: ArtRoomViewModel) {
     Dialog(onDismissRequest = { viewModel.onChangeShowDialog(false) }) {
         Box(
             modifier = Modifier
-                .size(700.dp)
+                .size(200.dp)
                 .background(Color.Black),
             contentAlignment = Alignment.Center
         ) {

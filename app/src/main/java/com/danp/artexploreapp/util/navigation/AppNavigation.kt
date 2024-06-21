@@ -1,5 +1,6 @@
 package com.danp.artexploreapp.util.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,6 +16,13 @@ import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
 import com.danp.artexploreapp.profile.presentation.Perfil
 import com.danp.artexploreapp.qr.presentation.QrScreen
+
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint1
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint2
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint3
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint4
+import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint5
 import com.danp.artexploreapp.settings.presentation.screens.Settings
 
 @Composable
@@ -32,6 +40,11 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
 
         composable(route = Screens.ScreenSettings.route) { Settings(navController) }
         composable(route = Screens.ScreenRoom1Map.route) { Room1(navController, ArtRoomViewModel(),) }
+        composable(route = Screens.ScreenRoom1MapPaint1.route) { Room1Paint1(navController, ArtRoomViewModel()) }
+        composable(route = Screens.ScreenRoom1MapPaint2.route) { Room1Paint2(navController, ArtRoomViewModel(),) }
+        composable(route = Screens.ScreenRoom1MapPaint3.route) { Room1Paint3(navController, ArtRoomViewModel(),) }
+        composable(route = Screens.ScreenRoom1MapPaint4.route) { Room1Paint4(navController, ArtRoomViewModel(),) }
+        composable(route = Screens.ScreenRoom1MapPaint5.route) { Room1Paint5(navController, ArtRoomViewModel(),) }
 
 
 
