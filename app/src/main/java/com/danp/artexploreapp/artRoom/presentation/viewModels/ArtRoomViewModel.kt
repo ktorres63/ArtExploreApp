@@ -2,6 +2,7 @@ package com.danp.artexploreapp.artRoom.presentation.viewModels
 
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
@@ -27,6 +28,12 @@ class ArtRoomViewModel : ViewModel() {
         private set
     var circlePosition by mutableStateOf(Offset(300f, 300f))
         private set
+
+    lateinit var context : Context
+
+    fun setContex(contex: Context){
+        this.context = contex
+    }
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
@@ -83,20 +90,20 @@ class ArtRoomViewModel : ViewModel() {
         Log.d(TAG, "Stopping Service Beacon Scanner - in ArtRoomViewModel")
 
 //        // stopr service
-//        if (isBound) {
-//            context.unbindService(serviceConnection)
-//            isBound = false
-//        }
-//        val intent = Intent(context, BeaconScannerService::class.java)
-//        context.stopService(intent)
+        if (isBound) {
+            context.unbindService(serviceConnection)
+            isBound = false
+        }
+        val intent = Intent(context, BeaconScannerService::class.java)
+        context.stopService(intent)
     }
 
     private fun startServiceScanBeacon() {
         Log.d(TAG, "Starting Service Beacon Scanner - in ArtRoomViewModel")
         // Vincular al servicio
-//        val intent = Intent(context!!, BeaconScannerService::class.java)
-//        context!!.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-//        context!!.startService(intent)
+        val intent = Intent(context!!, BeaconScannerService::class.java)
+        context!!.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        context!!.startService(intent)
     }
 
     private fun startPollingService() {

@@ -39,6 +39,7 @@ import com.danp.artexploreapp.util.navigation.Screens
 
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import com.danp.artexploreapp.util.MyTopBar
 import kotlinx.coroutines.delay
 
@@ -73,6 +74,8 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
 
     val iconBoxOffsetXCandelabro2 = (0.dp)
     val iconBoxOffsetYCandelabro2 = (-150.dp)
+    viewModel.setContex(LocalContext.current)
+
     //LaunchedEffect(Unit) {
     //   delay(10000)
     //   iconBoxSize1 = 100.dp

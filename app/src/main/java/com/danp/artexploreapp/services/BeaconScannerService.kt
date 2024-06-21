@@ -24,7 +24,7 @@ import com.idnp2024a.beaconscanner.BeaconScanerLibrary.BleScanCallback
 
 class BeaconScannerService : Service() {
 
-    private val TAG = "BeaconScannerService"
+    private val TAG = "c"
     private val binder = MyBinder()
 
     private var currentGallery: String? = ""
