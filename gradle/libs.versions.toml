@@ -15,6 +15,7 @@ navigationCompose = "2.7.7"
 playServicesMaps = "18.2.0"
 retrofit = "2.9.0"
 runtimeLivedata = "1.6.8"
+appcompat = "1.7.0"
 
 [libraries]
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }

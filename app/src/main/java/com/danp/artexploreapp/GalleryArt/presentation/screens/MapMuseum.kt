@@ -249,7 +249,7 @@ fun MapMuseum(navController: NavController) {
         IconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier
-                .align(Alignment.TopStart)
+                //.align(Alignment.TopStart)
                 .padding(16.dp) // Padding para alejar el botón del borde
         ) {
             Icon(
