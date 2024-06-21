@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,7 +47,7 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
-
+    val switchState = viewModel.switchState
 
     val colorBackground = Color.White
     val (screenWidth, screenHeight) = getScreenDimensions()
@@ -97,6 +98,13 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
                 .padding(ip),
             contentAlignment = Alignment.BottomCenter
         ) {
+            Switch(
+                checked = switchState,
+                onCheckedChange = { isChecked ->
+                    viewModel.onChangeSwitchState(isChecked)
+                },
+                modifier = Modifier.padding(16.dp)
+            )
             DrawingCanvas(circlePosition)
             IconBox(
                 viewModel = viewModel,

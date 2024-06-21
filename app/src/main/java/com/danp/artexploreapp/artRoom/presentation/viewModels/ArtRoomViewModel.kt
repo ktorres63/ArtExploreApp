@@ -1,14 +1,26 @@
 package com.danp.artexploreapp.artRoom.presentation.viewModels
 
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
+import com.danp.artexploreapp.services.BeaconScannerService
 import kotlin.random.Random
 
 class ArtRoomViewModel : ViewModel() {
+    private val TAG: String = "ArtRoomViewModel"
+    private var beaconService: BeaconScannerService? = null
+    private var isBound: Boolean = false
+
+    var switchState by mutableStateOf(false)
+        private set
     var showDialog2 by mutableStateOf(false)
         private set
     var showDialog1 by mutableStateOf(false)
@@ -16,6 +28,20 @@ class ArtRoomViewModel : ViewModel() {
     var circlePosition by mutableStateOf(Offset(300f, 300f))
         private set
 
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
+            val binder = service as BeaconScannerService.MyBinder
+            beaconService = binder.getService()
+            isBound = true
+            startPollingService()
+
+        }
+
+        override fun onServiceDisconnected(className: ComponentName?) {
+            beaconService = null
+            isBound = false
+        }
+    }
 
     fun onChangeShowDialog(newShowDialog: Boolean) {
         showDialog1 = newShowDialog
@@ -40,6 +66,53 @@ class ArtRoomViewModel : ViewModel() {
     fun setNewPositionCircle(newPosition: Offset) {
         circlePosition = newPosition
     }
+
+    fun onChangeSwitchState(newSwitch: Boolean){
+        Log.d(TAG, "Change State $switchState -> $newSwitch")
+
+        switchState = newSwitch
+
+        if(switchState){
+            startServiceScanBeacon()
+        }else{
+            stopServiceScanBeacon()
+        }
+    }
+
+    private fun stopServiceScanBeacon() {
+        Log.d(TAG, "Stopping Service Beacon Scanner - in ArtRoomViewModel")
+
+//        // stopr service
+//        if (isBound) {
+//            context.unbindService(serviceConnection)
+//            isBound = false
+//        }
+//        val intent = Intent(context, BeaconScannerService::class.java)
+//        context.stopService(intent)
+    }
+
+    private fun startServiceScanBeacon() {
+        Log.d(TAG, "Starting Service Beacon Scanner - in ArtRoomViewModel")
+        // Vincular al servicio
+//        val intent = Intent(context!!, BeaconScannerService::class.java)
+//        context!!.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+//        context!!.startService(intent)
+    }
+
+    private fun startPollingService() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            while (isBound) {
+//                beaconService?.let { service ->
+//                    val currentGallery = service.getCurrentGallery()
+//                    val nearestPainting = service.getNearestPainting()
+//                    Log.d(TAG, "Current Gallery: $currentGallery")
+//                    Log.d(TAG, "Nearest Painting: $nearestPainting")
+//                }
+//                delay(1000) // Espera 5 segundos antes de la próxima consulta
+//            }
+//        }
+    }
+
 
 
 }
