@@ -13,4 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val GreenJC = Color(0xFF67DF64)
 
-val BoneJC = Color(0xFFF9F6EE)
+val PrimaryColor = Color(0xFFEBEBE6)
+val SecondaryColor = Color(0xFFFF6A5F)

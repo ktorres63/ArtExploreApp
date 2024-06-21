@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.danp.artexploreapp.R
+import com.danp.artexploreapp.ui.theme.PrimaryColor
+import com.danp.artexploreapp.ui.theme.SecondaryColor
 import com.danp.artexploreapp.util.navigation.AppNavigation
 import com.danp.artexploreapp.util.navigation.Screens
 
@@ -30,11 +33,14 @@ val bottomBarRoutes = setOf(
 fun MainScreen(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val isSelected = currentRoute
+
     Scaffold(
         bottomBar = {
             if (currentRoute in bottomBarRoutes) {
-                NavigationBar {
+                NavigationBar(containerColor = PrimaryColor) {
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = SecondaryColor),
                         selected = (currentRoute == Screens.ScreenHome.route),
                         onClick = {
                             if (currentRoute != Screens.ScreenHome.route) {
@@ -48,10 +54,13 @@ fun MainScreen(navController: NavHostController) {
                         icon = {
                             Icon(
                                 imageVector = Icons.Default.Home,
-                                contentDescription = null
+                                contentDescription = null,
                             )
+
+
                         })
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = SecondaryColor),
                         selected = (currentRoute == Screens.ScreenQrPainting.route),
                         onClick = {
                             if (currentRoute != Screens.ScreenQrPainting.route) {
@@ -65,10 +74,11 @@ fun MainScreen(navController: NavHostController) {
                         icon = {
                             Icon(
                                 painterResource(id = R.drawable.ic_qr),
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         })
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = SecondaryColor),
                         selected = (currentRoute == Screens.ScreenMap.route),
                         onClick = {
                             if (currentRoute != Screens.ScreenMap.route) {
@@ -82,10 +92,12 @@ fun MainScreen(navController: NavHostController) {
                         icon = {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
-                                contentDescription = null
-                            )
+                                contentDescription = null,
+
+                                )
                         })
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = SecondaryColor),
                         selected = (currentRoute == Screens.ScreenUser.route),
                         onClick = {
                             if (currentRoute != Screens.ScreenUser.route) {
