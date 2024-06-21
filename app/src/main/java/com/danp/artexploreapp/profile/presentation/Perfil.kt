@@ -26,23 +26,33 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.R
 import com.danp.artexploreapp.ui.theme.PinkNav
+import com.danp.artexploreapp.util.MyTopBar
 import com.danp.artexploreapp.util.navigation.Screens
 
 
 @Composable
 fun Perfil(navController: NavController) {
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier
+
+    Scaffold(
+        topBar = { MyTopBar(navController = navController, header = "Perfil", isHome = false) }
+    ){ ip ->
+        Box(modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ProfileSection()
-        HistorySection()
-        OptionsSection(context, navController)
-        LogOutButton()
+            .padding(ip)) {
+            val context = LocalContext.current
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ProfileSection()
+                HistorySection()
+                OptionsSection(context, navController)
+                LogOutButton()
+            }
+        }
     }
 }
 
