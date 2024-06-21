@@ -38,10 +38,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.danp.artexploreapp.R
+import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.ui.theme.PurpleGrey40
 import com.danp.artexploreapp.util.MyTopBar
 import com.danp.artexploreapp.util.navigation.Screens
 import kotlinx.coroutines.launch
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewMapCanva(){
+    MapMuseum(navController = rememberNavController())
+}
 
 @Composable
 fun MapMuseum(navController: NavController) {
@@ -291,3 +298,4 @@ fun pathToRectangles(
 
     return path
 }
+
