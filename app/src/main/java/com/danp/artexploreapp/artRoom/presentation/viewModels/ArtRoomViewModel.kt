@@ -1,4 +1,5 @@
 package com.danp.artexploreapp.artRoom.presentation.viewModels
+import androidx.lifecycle.SavedStateHandle
 
 
 import android.content.ComponentName
@@ -11,8 +12,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.danp.artexploreapp.services.BeaconScannerService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class ArtRoomViewModel : ViewModel() {
@@ -20,8 +27,11 @@ class ArtRoomViewModel : ViewModel() {
     private var beaconService: BeaconScannerService? = null
     private var isBound: Boolean = false
 
-    var switchState by mutableStateOf(false)
-        private set
+//    var switchState by mutableStateOf(false)
+//        private set
+    private val switchState = MutableLiveData(false)
+    fun getSwitchState(): LiveData<Boolean> = switchState
+
     var showDialog2 by mutableStateOf(false)
         private set
     var showDialog1 by mutableStateOf(false)
@@ -77,13 +87,19 @@ class ArtRoomViewModel : ViewModel() {
     fun onChangeSwitchState(newSwitch: Boolean){
         Log.d(TAG, "Change State $switchState -> $newSwitch")
 
-        switchState = newSwitch
+        switchState.setValue(newSwitch)
+//        switchState = newSwitch
 
-        if(switchState){
+        if (getSwitchState().value!!) {
             startServiceScanBeacon()
-        }else{
+        } else {
             stopServiceScanBeacon()
         }
+    }
+
+    fun setStopScan(){
+        Log.d(TAG, "Change stopping scanner")
+        stopServiceScanBeacon()
     }
 
     private fun stopServiceScanBeacon() {
@@ -101,23 +117,27 @@ class ArtRoomViewModel : ViewModel() {
     private fun startServiceScanBeacon() {
         Log.d(TAG, "Starting Service Beacon Scanner - in ArtRoomViewModel")
         // Vincular al servicio
+        if(isBound){
+            Log.d(TAG, "Service running, no create other")
+            return
+        }
         val intent = Intent(context!!, BeaconScannerService::class.java)
         context!!.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         context!!.startService(intent)
     }
 
     private fun startPollingService() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            while (isBound) {
-//                beaconService?.let { service ->
-//                    val currentGallery = service.getCurrentGallery()
-//                    val nearestPainting = service.getNearestPainting()
-//                    Log.d(TAG, "Current Gallery: $currentGallery")
-//                    Log.d(TAG, "Nearest Painting: $nearestPainting")
-//                }
-//                delay(1000) // Espera 5 segundos antes de la próxima consulta
-//            }
-//        }
+        viewModelScope.launch(Dispatchers.IO) {
+            while (isBound) {
+                beaconService?.let { service ->
+                    val currentGallery = service.getCurrentGallery()
+                    val nearestPainting = service.getNearestPainting()
+                    Log.d(TAG, "Current Gallery: $currentGallery")
+                    Log.d(TAG, "Nearest Painting: $nearestPainting")
+                }
+                delay(2000) // Espera 5 segundos antes de la próxima consulta
+            }
+        }
     }
 
 

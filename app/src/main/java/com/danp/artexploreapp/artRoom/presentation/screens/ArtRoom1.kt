@@ -39,6 +39,8 @@ import com.danp.artexploreapp.util.navigation.Screens
 
 
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import com.danp.artexploreapp.util.MyTopBar
 import kotlinx.coroutines.delay
@@ -48,7 +50,7 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
-    val switchState = viewModel.switchState
+    val switchState = viewModel.getSwitchState().observeAsState(false)
 
     val colorBackground = Color.White
     val (screenWidth, screenHeight) = getScreenDimensions()
@@ -102,7 +104,7 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
             contentAlignment = Alignment.BottomCenter
         ) {
             Switch(
-                checked = switchState,
+                checked = switchState.value,
                 onCheckedChange = { isChecked ->
                     viewModel.onChangeSwitchState(isChecked)
                 },
@@ -193,6 +195,7 @@ fun IconBox(
             .size(size1)
             .clip(CircleShape)
             .clickable {
+                viewModel.setStopScan()
                 navController.navigate(Screens.ScreenRoom1MapPaint1.route) {
                     popUpTo(navController.graph.startDestinationId)
                     launchSingleTop = true
@@ -226,7 +229,9 @@ fun IconBox2(
             .size(size2)
             .clip(CircleShape)
             .clickable {
+                viewModel.setStopScan()
                 navController.navigate(Screens.ScreenRoom1MapPaint2.route)
+
             },
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -256,7 +261,9 @@ fun IconBox3(
             .size(size3)
             .clip(CircleShape)
             .clickable {
+                viewModel.setStopScan()
                 navController.navigate(Screens.ScreenRoom1MapPaint3.route)
+
             },
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -286,6 +293,7 @@ fun IconBox4(
             .size(size4)
             .clip(CircleShape)
             .clickable {
+                viewModel.setStopScan()
                 navController.navigate(Screens.ScreenRoom1MapPaint4.route)
             },
         contentAlignment = Alignment.BottomCenter
@@ -316,6 +324,7 @@ fun IconBox5(
             .size(size5)
             .clip(CircleShape)
             .clickable {
+                viewModel.setStopScan()
                 navController.navigate(Screens.ScreenRoom1MapPaint5.route)
             },
         contentAlignment = Alignment.BottomCenter
