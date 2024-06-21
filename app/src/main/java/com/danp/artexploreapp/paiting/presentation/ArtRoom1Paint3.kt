@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.artRoom.presentation.screens
+package com.danp.artexploreapp.paiting.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import com.danp.artexploreapp.R
 import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 
 @Composable
-fun Room1Paint5(navController: NavController, viewModel: ArtRoomViewModel) {
+fun Room1Paint3(navController: NavController, viewModel: ArtRoomViewModel) {
     Box(
         modifier = Modifier
             .size(850.dp)
@@ -39,12 +39,12 @@ fun Room1Paint5(navController: NavController, viewModel: ArtRoomViewModel) {
             onClick = { navController.popBackStack() },
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp)
+                .padding(16.dp) // Padding para alejar el botón del borde
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.arrowellow),
+                painter = painterResource(id = R.drawable.arrowellow), // Cambia a tu icono de flecha
                 contentDescription = "Volver",
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(40.dp) // Tamaño del icono
             )
         }
         Column(
@@ -53,23 +53,22 @@ fun Room1Paint5(navController: NavController, viewModel: ArtRoomViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "LA JOVEN DE LA PERLA",
+                text = "EL BESO",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 16.dp)
             )
-
             Image(
-                painter = painterResource(id = R.drawable.dama),
+                painter = painterResource(id = R.drawable.elbeso),
                 contentDescription = "Imagen de un artista famoso",
                 modifier = Modifier.size(400.dp)
             )
             Text(
-                text = "JOHANNES VERMEER",
+                text = "GUSTAV KLIMT",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 14.dp)
             )
             Text(
-                text = "La joven de la perla , también conocida como Muchacha con turbante, es una de las obras maestras del pintor neerlandés Johannes Vermeer realizada entre 1665 y 1667. Como el nombre indica, utiliza un pendiente de perla como punto focal. La pintura se encuentra actualmente en el museo Mauritshuis de La Haya.",
+                text = "Esta obra, que sigue los cánones del Simbolismo, es una tela con decoraciones y mosaicos sobre un fondo dorado. Está expuesta en la Österreichische Galerie Belvedere de Viena. Normalmente las obras de Klimt creaban escándalos y eran criticadas como pornografía y por ser excesivamente pervertidas. Las obras pusieron a Klimt como un enfant terrible por sus opiniones anti-autoritarias y anti-populistas sobre el arte. Él escribió: Si no se puede complacer a todo el mundo con sus obras y su arte, por favor complace a unos pocos. Por el contrario, El beso fue recibida con entusiasmo, y de inmediato no encontró un comprador",
                 style = TextStyle(color = Color.Black, fontSize = 12.sp, fontFamily = FontFamily.Default),
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
                 textAlign = TextAlign.Justify,

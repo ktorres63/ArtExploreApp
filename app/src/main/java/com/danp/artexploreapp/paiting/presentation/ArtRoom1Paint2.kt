@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.artRoom.presentation.screens
+package com.danp.artexploreapp.paiting.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import com.danp.artexploreapp.R
 import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 
 @Composable
-fun Room1Paint3(navController: NavController, viewModel: ArtRoomViewModel) {
+fun Room1Paint2(navController: NavController, viewModel: ArtRoomViewModel) {
     Box(
         modifier = Modifier
             .size(850.dp)
@@ -53,22 +53,22 @@ fun Room1Paint3(navController: NavController, viewModel: ArtRoomViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "EL BESO",
+                text = "EL GRITO",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 16.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.elbeso),
+                painter = painterResource(id = R.drawable.grito),
                 contentDescription = "Imagen de un artista famoso",
                 modifier = Modifier.size(400.dp)
             )
             Text(
-                text = "GUSTAV KLIMT",
+                text = "EDVARD MUNCH",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 14.dp)
             )
             Text(
-                text = "Esta obra, que sigue los cánones del Simbolismo, es una tela con decoraciones y mosaicos sobre un fondo dorado. Está expuesta en la Österreichische Galerie Belvedere de Viena. Normalmente las obras de Klimt creaban escándalos y eran criticadas como pornografía y por ser excesivamente pervertidas. Las obras pusieron a Klimt como un enfant terrible por sus opiniones anti-autoritarias y anti-populistas sobre el arte. Él escribió: Si no se puede complacer a todo el mundo con sus obras y su arte, por favor complace a unos pocos. Por el contrario, El beso fue recibida con entusiasmo, y de inmediato no encontró un comprador",
+                text = "El grito es el título de cuatro cuadros del noruego Edvard Munch. La versión más famosa se encuentra en la Galería Nacional de Noruega y fue completada en 1893. Otras dos versiones del cuadro se encuentran en el Museo Munch, también en Oslo, mientras que la cuarta versión pertenece a una colección particular. En 1895, Munch realizó también una litografía con el mismo título",
                 style = TextStyle(color = Color.Black, fontSize = 12.sp, fontFamily = FontFamily.Default),
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
                 textAlign = TextAlign.Justify,

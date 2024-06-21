@@ -1,4 +1,4 @@
-package com.danp.artexploreapp.artRoom.presentation.screens
+package com.danp.artexploreapp.paiting.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import com.danp.artexploreapp.R
 import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
 
 @Composable
-fun Room1Paint4(navController: NavController, viewModel: ArtRoomViewModel) {
+fun Room1Paint5(navController: NavController, viewModel: ArtRoomViewModel) {
     Box(
         modifier = Modifier
             .size(850.dp)
@@ -39,12 +39,12 @@ fun Room1Paint4(navController: NavController, viewModel: ArtRoomViewModel) {
             onClick = { navController.popBackStack() },
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp) // Padding para alejar el botón del borde
+                .padding(16.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.arrowellow), // Cambia a tu icono de flecha
+                painter = painterResource(id = R.drawable.arrowellow),
                 contentDescription = "Volver",
-                modifier = Modifier.size(40.dp) // Tamaño del icono
+                modifier = Modifier.size(40.dp)
             )
         }
         Column(
@@ -53,22 +53,23 @@ fun Room1Paint4(navController: NavController, viewModel: ArtRoomViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "LA NOCHE ESTRELLADA",
+                text = "LA JOVEN DE LA PERLA",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 16.dp)
             )
+
             Image(
-                painter = painterResource(id = R.drawable.nocheestrellada),
+                painter = painterResource(id = R.drawable.dama),
                 contentDescription = "Imagen de un artista famoso",
                 modifier = Modifier.size(400.dp)
             )
             Text(
-                text = "VINCET VAN GOGH",
+                text = "JOHANNES VERMEER",
                 style = TextStyle(color = Color.Black, fontSize = 32.sp),
                 modifier = Modifier.padding(top = 14.dp)
             )
             Text(
-                text = "La noche estrellada es un óleo sobre lienzo del pintor postimpresionista neerlandés Vincent van Gogh. Pintado en junio de 1889, representa la vista desde la ventana orientada al este de su habitación de asilo en Saint-Rémy-de-Provence, justo antes del amanecer, con la adición de un pueblo imaginario. Ha estado en la colección permanente del Museo de Arte Moderno de la ciudad de Nueva York desde 1941, adquirida a través de Lillie P. Bliss Bequest. Ampliamente considerada como la obra maestra del pintor. La noche estrellada es una de las pinturas más reconocidas en la historia de la cultura occidental",
+                text = "La joven de la perla , también conocida como Muchacha con turbante, es una de las obras maestras del pintor neerlandés Johannes Vermeer realizada entre 1665 y 1667. Como el nombre indica, utiliza un pendiente de perla como punto focal. La pintura se encuentra actualmente en el museo Mauritshuis de La Haya.",
                 style = TextStyle(color = Color.Black, fontSize = 12.sp, fontFamily = FontFamily.Default),
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
                 textAlign = TextAlign.Justify,

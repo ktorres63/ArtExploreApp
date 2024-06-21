@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,9 +38,11 @@ import com.danp.artexploreapp.util.navigation.Screens
 
 
 import androidx.compose.runtime.*
+import com.danp.artexploreapp.util.MyTopBar
 import kotlinx.coroutines.delay
+
 @Composable
-fun Room1(navController: NavController,viewModel: ArtRoomViewModel) {
+fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
@@ -70,112 +73,111 @@ fun Room1(navController: NavController,viewModel: ArtRoomViewModel) {
     val iconBoxOffsetXCandelabro2 = (0.dp)
     val iconBoxOffsetYCandelabro2 = (-150.dp)
     //LaunchedEffect(Unit) {
-     //   delay(10000)
-     //   iconBoxSize1 = 100.dp
+    //   delay(10000)
+    //   iconBoxSize1 = 100.dp
     //}
 
     // LaunchedEffect to change the size of IconBox1 after 10 seconds
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorBackground),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        IconButton(
-            onClick = { navController.navigate(Screens.ScreenMapMuseum.route)  },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(10.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.arrowellow),
-                contentDescription = "Volver",
-                modifier = Modifier.size(40.dp)
+    Scaffold(
+        topBar = {
+            MyTopBar(
+                navController = navController,
+                header = "Habitacion 1",
+                isHome = false
             )
         }
+    ) { ip ->
 
 
-        Text(
-            text = "Habitacion 1",
-            style = TextStyle(color = Color.Black, fontSize = 25.sp),
+        Box(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 40.dp)
-        )
-        DrawingCanvas(circlePosition)
-        IconBox(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetX1,
-            offsetY =iconBoxOffsetY1,
-            size1 = iconBoxSize1,
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox2(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetX2,
-            offsetY =iconBoxOffsetY2,
-            size2 = iconBoxSize2,
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox3(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetX3,
-            offsetY =iconBoxOffsetY3,
-            size3 = iconBoxSize3,
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox4(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetX4,
-            offsetY =iconBoxOffsetY4,
-            size4 = iconBoxSize4,
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox5(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetX5,
-            offsetY =iconBoxOffsetY5,
-            size5 = iconBoxSize5,
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox6(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetXCandelabro1,
-            offsetY =iconBoxOffsetYCandelabro1,
+                .fillMaxSize()
+                .background(colorBackground)
+                .padding(ip),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            DrawingCanvas(circlePosition)
+            IconBox(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetX1,
+                offsetY = iconBoxOffsetY1,
+                size1 = iconBoxSize1,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox2(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetX2,
+                offsetY = iconBoxOffsetY2,
+                size2 = iconBoxSize2,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox3(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetX3,
+                offsetY = iconBoxOffsetY3,
+                size3 = iconBoxSize3,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox4(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetX4,
+                offsetY = iconBoxOffsetY4,
+                size4 = iconBoxSize4,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox5(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetX5,
+                offsetY = iconBoxOffsetY5,
+                size5 = iconBoxSize5,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox6(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetXCandelabro1,
+                offsetY = iconBoxOffsetYCandelabro1,
 
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
-        IconBox7(
-            viewModel = viewModel,
-            offsetX = iconBoxOffsetXCandelabro2,
-            offsetY =iconBoxOffsetYCandelabro2,
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
+            IconBox7(
+                viewModel = viewModel,
+                offsetX = iconBoxOffsetXCandelabro2,
+                offsetY = iconBoxOffsetYCandelabro2,
 
-            navController = navController,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        )
+                navController = navController,
+                modifier = Modifier.align(Alignment.BottomEnd)
+            )
 
-    }
+        }
 
-    if (showDialog1) {
-        NocheEstrelladaDialogScreen(viewModel)
-    }
-    if (showDialog2) {
-        Grito(viewModel)
+        if (showDialog1) {
+            NocheEstrelladaDialogScreen(viewModel)
+        }
+        if (showDialog2) {
+            Grito(viewModel)
+        }
     }
 }
 
 @Composable
-fun IconBox(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size1: Dp,navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    size1: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(size1)
             .clip(CircleShape)
@@ -198,10 +200,17 @@ fun IconBox(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size1: Dp,navC
 }
 
 @Composable
-fun IconBox2(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size2: Dp,navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox2(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    size2: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(size2)
             .clip(CircleShape)
@@ -213,16 +222,25 @@ fun IconBox2(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size2: Dp,nav
         Image(
             painter = painterResource(id = R.drawable.grito),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
 
 @Composable
-fun IconBox3(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size3: Dp,navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox3(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    size3: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(size3)
             .clip(CircleShape)
@@ -234,15 +252,25 @@ fun IconBox3(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size3: Dp,nav
         Image(
             painter = painterResource(id = R.drawable.elbeso),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
+
 @Composable
-fun IconBox4(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size4: Dp,navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox4(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    size4: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(size4)
             .clip(CircleShape)
@@ -254,15 +282,25 @@ fun IconBox4(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, size4: Dp,nav
         Image(
             painter = painterResource(id = R.drawable.nocheestrellada),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
+
 @Composable
-fun IconBox5(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp,size5: Dp, navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox5(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    size5: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(size5)
             .clip(CircleShape)
@@ -274,49 +312,64 @@ fun IconBox5(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp,size5: Dp, nav
         Image(
             painter = painterResource(id = R.drawable.dama),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
+
 @Composable
-fun IconBox6(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox6(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(100.dp)
-            .clip(CircleShape)
-           ,
+            .clip(CircleShape),
         contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.candelabro),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
+
 @Composable
-fun IconBox7(viewModel: ArtRoomViewModel, offsetX: Dp,offsetY: Dp, navController: NavController, modifier: Modifier = Modifier) {
+fun IconBox7(
+    viewModel: ArtRoomViewModel,
+    offsetX: Dp,
+    offsetY: Dp,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .offset(x = offsetX,y=offsetY)
+            .offset(x = offsetX, y = offsetY)
             .padding(60.dp)
             .size(100.dp)
-            .clip(CircleShape)
-           ,
+            .clip(CircleShape),
         contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.candelabro),
             contentDescription = "Ícono",
-            modifier = Modifier.padding(3.dp) .size(140.dp)
+            modifier = Modifier
+                .padding(3.dp)
+                .size(140.dp)
         )
     }
 }
-
-
-
 
 
 @Composable

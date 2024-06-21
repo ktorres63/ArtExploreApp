@@ -1,6 +1,5 @@
 package com.danp.artexploreapp.util.navigation
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -17,12 +16,11 @@ import com.danp.artexploreapp.home.presentation.screens.Home
 import com.danp.artexploreapp.profile.presentation.Perfil
 import com.danp.artexploreapp.qr.presentation.QrScreen
 
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint1
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint2
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint3
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint4
-import com.danp.artexploreapp.artRoom.presentation.screens.Room1Paint5
+import com.danp.artexploreapp.paiting.presentation.Room1Paint1
+import com.danp.artexploreapp.paiting.presentation.Room1Paint2
+import com.danp.artexploreapp.paiting.presentation.Room1Paint3
+import com.danp.artexploreapp.paiting.presentation.Room1Paint4
+import com.danp.artexploreapp.paiting.presentation.Room1Paint5
 import com.danp.artexploreapp.settings.presentation.screens.Settings
 
 @Composable
