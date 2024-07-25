@@ -7,6 +7,8 @@ sealed class Screens(val route: String) {
 
     data object ScreenSettings: Screens("settings")
     data object ScreenRoom1Map: Screens("room1Map")
+    data object ScreenPaintingView: Screens("paintingView/{painting}")
+
     data object ScreenRoom1MapPaint3: Screens("room1MapPaint3")
     data object ScreenRoom1MapPaint1: Screens("room1MapPaint1")
     data object ScreenRoom1MapPaint2: Screens("room1MapPaint2")
