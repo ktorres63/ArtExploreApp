@@ -1,9 +1,11 @@
 package com.danp.artexploreapp.googleMap.presentation.screens
 
+import android.widget.Button
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -13,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.danp.artexploreapp.util.MyTopBar
 import com.danp.artexploreapp.util.navigation.Screens
@@ -37,6 +40,7 @@ fun Map(navController: NavController) {
             .padding(ip))
         val centroCulturalunsa = LatLng(-16.398074, -71.537280)
         val salaCulturalMonasterioSC = LatLng(-16.396122, -71.536472)
+        val umbralCentroCultural = LatLng(-16.397567, -71.535502)
 
         val properties by remember { mutableStateOf(MapProperties(mapType = MapType.NORMAL)) }
         val uiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = true)) }
@@ -74,6 +78,17 @@ fun Map(navController: NavController) {
                     showDialog = true
                 }
             )
+            Marker(
+                state = rememberMarkerState(position = umbralCentroCultural),
+                title = "Umbral Centro Cultural",
+                snippet = "Centro cultural • Calle San Francisco 204,\n" +
+                        "interior 110, C. Moral 115",
+                onInfoWindowClick = {
+                    dialogTitle = "Umbral Centro Cultural"
+                    dialogMessage = "Centro cultural • Calle San Francisco 204,Arequipa"
+                    showDialog = true
+                }
+            )
         }
 
         if (showDialog) {
@@ -86,9 +101,16 @@ fun Map(navController: NavController) {
                         navController.navigate(Screens.ScreenMapMuseum.route)
                         showDialog = false
                     }) {
-                        Text("IR")
+                        Text("IR" )
                     }
-                }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        Text("Cancelar")
+                    }
+                },
+                containerColor = Color.Black,
+                shape = MaterialTheme.shapes.medium
             )
         }
     }

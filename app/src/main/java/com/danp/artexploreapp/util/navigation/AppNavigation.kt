@@ -15,7 +15,7 @@ import com.danp.artexploreapp.auth.presentation.screens.register.SignUp
 import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
 import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
-import com.danp.artexploreapp.paiting.presentation.PaintingView
+import com.danp.artexploreapp.paiting.presentation.PaintingCard
 import com.danp.artexploreapp.paiting.presentation.PaintingsViewModel
 import com.danp.artexploreapp.profile.presentation.Perfil
 import com.danp.artexploreapp.qr.presentation.QrScreen
@@ -38,7 +38,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             arguments = listOf(navArgument("painting") { type = NavType.StringType })
         ) { backStackEntry ->
             val paintingJson = backStackEntry.arguments?.getString("painting")
-            PaintingView(navController = navController, paintingJson = paintingJson)
+            PaintingCard(navController = navController, paintingJson = paintingJson)
         }
 
 
