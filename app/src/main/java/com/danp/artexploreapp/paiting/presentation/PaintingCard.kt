@@ -1,5 +1,7 @@
 package com.danp.artexploreapp.paiting.presentation
 
+import android.media.browse.MediaBrowser
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,16 +24,25 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.danp.artexploreapp.R
@@ -44,6 +55,16 @@ import com.google.gson.Gson
 fun PaintingCard(navController: NavController, paintingJson: String?) {
     val gson = Gson()
     val painting = paintingJson?.let { gson.fromJson(it, Painting::class.java) }
+
+    var player by remember { mutableStateOf<ExoPlayer?>(null) } // Estado para el reproductor de audio
+    val context = LocalContext.current // Obtiene el contexto actual
+    LaunchedEffect(Unit) {
+        player = ExoPlayer.Builder(context).build() // Inicializa el reproductor
+    }
+    DisposableEffect(Unit) {
+        onDispose { player?.release() } // Limpia el reproductor al salir
+    }
+
     Scaffold(
         topBar = { MyTopBar(navController = navController, "Painting information", true) }
     ) { ip ->
@@ -108,7 +129,15 @@ fun PaintingCard(navController: NavController, paintingJson: String?) {
                             contentScale = ContentScale.FillBounds,
                         )
                         IconButtonWithText(
-                            onClick = { /* Handle click */ },
+                            onClick = { /* Handle click */
+                                // Reproduce el audio
+                                painting.audio.let { audioUrl ->
+                                    val mediaItem = MediaItem.fromUri(Uri.parse(audioUrl))
+                                    player?.setMediaItem(mediaItem)
+                                    player?.prepare()
+                                    player?.play()
+                                }
+                            },
                             modifier = Modifier.padding(8.dp)
                         )
 
@@ -153,6 +182,6 @@ fun IconButtonWithText(onClick: () -> Unit, modifier: Modifier) {
             colorFilter = ColorFilter.tint(Color.DarkGray)
         )
 
-        Text("English")
+        Text("Spanish")
     }
 }
