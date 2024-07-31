@@ -10,8 +10,10 @@ import androidx.navigation.navArgument
 import com.danp.artexploreapp.GalleryArt.presentation.screens.MapMuseum
 import com.danp.artexploreapp.artRoom.presentation.screens.Room1
 import com.danp.artexploreapp.artRoom.presentation.viewModels.ArtRoomViewModel
+import com.danp.artexploreapp.auth.presentation.screens.login.Login
 import com.danp.artexploreapp.auth.presentation.screens.login.LoginScreen
 import com.danp.artexploreapp.auth.presentation.screens.register.SignUp
+import com.danp.artexploreapp.auth.presentation.viewModels.AuthViewModel
 import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
 import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
@@ -26,11 +28,17 @@ import com.danp.artexploreapp.paiting.presentation.Room1Paint3
 import com.danp.artexploreapp.paiting.presentation.Room1Paint4
 import com.danp.artexploreapp.paiting.presentation.Room1Paint5
 import com.danp.artexploreapp.settings.presentation.screens.Settings
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
-    NavHost(navController = navController, startDestination = Screens.ScreenHome.route) { // TODO cambiar a login o home
+    val auth = FirebaseAuth.getInstance()
+
+
+    NavHost(navController = navController, startDestination = Screens.ScreenLogin2.route) { // TODO cambiar a login o home
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
+        composable(route = Screens.ScreenLogin2.route) { Login(navController, AuthViewModel(auth)) }
+
         composable(route = Screens.ScreenSignUp.route) { SignUp(navController) }
         composable(route = Screens.ScreenHome.route) { Home(navController, PaintingsViewModel()) }
         composable(

@@ -102,7 +102,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel) {
                 )
                 ButtonContinue(
                     textContinue = "Continuar",
-                    onClick = { viewModel.onClickContinue()  },
+                    onClick = { viewModel.onClickContinue() },
                     backgroundColor = Color(0xFFFF6A5F), // Color de fondo personalizado
                     textColor = Color.White, // Color de texto personalizado
                     enabled = viewModel.loginEnable.value ?: false
