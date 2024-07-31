@@ -57,6 +57,7 @@ fun QrScreen(navController: NavController) {
                 options.setPrompt("Scan a QR code")
 //                options.setCameraId(0)  // Usa una cámara específica del dispositivo
                 options.setBeepEnabled(true)
+                options.setCaptureActivity(CaptureActivityPortrait::class.java)
                 options.setOrientationLocked(false)
 //                options.setBarcodeImageEnabled(true)
 
