@@ -2,6 +2,8 @@ package com.danp.artexploreapp.util.navigation
 
 sealed class Screens(val route: String) {
     data object ScreenLogin: Screens("login")
+    data object ScreenLogin2: Screens("login2")
+
     data object ScreenSignUp: Screens("signUp")
     data object ScreenMapMuseum : Screens("mapMuseum")
 
@@ -21,6 +23,9 @@ sealed class Screens(val route: String) {
     data object ScreenMap : Screens(route = "map")
     data object ScreenUser : Screens(route = "user")
     data object ScreenQrPainting: Screens("qr")
+
+    // beacon
+    data object ScreenRoomBeacon: Screens("roomBeacon")
 
 
 }

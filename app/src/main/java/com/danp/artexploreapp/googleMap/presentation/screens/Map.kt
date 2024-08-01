@@ -92,10 +92,10 @@ fun Map(navController: NavController) {
         }
 
         if (showDialog) {
-            AlertDialog(
+            AlertDialog( //Cambiar Barra Texto Negro
                 onDismissRequest = { showDialog = false },
-                title = { Text(text = dialogTitle) },
-                text = { Text(text = dialogMessage) },
+                title = { Text(text = dialogTitle, color = Color.Black) },
+                text = { Text(text = dialogMessage, color = Color.Black) },
                 confirmButton = {
                     TextButton(onClick = {
                         navController.navigate(Screens.ScreenMapMuseum.route)
@@ -109,7 +109,7 @@ fun Map(navController: NavController) {
                         Text("Cancelar")
                     }
                 },
-                containerColor = Color.Black,
+                containerColor = Color(0xFFF5F5DC),
                 shape = MaterialTheme.shapes.medium
             )
         }
