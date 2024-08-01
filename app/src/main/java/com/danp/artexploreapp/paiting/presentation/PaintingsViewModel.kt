@@ -29,4 +29,8 @@ class PaintingsViewModel : ViewModel() {
             }
         }
     }
+
+    fun getPaintingById(id: String): Painting? {
+        return _agentsData.value.find { it.id == id.toInt() }
+    }
 }

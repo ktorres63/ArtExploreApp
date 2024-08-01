@@ -29,6 +29,8 @@ import com.danp.artexploreapp.settings.presentation.screens.Settings
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
+    val paintingsViewModel = PaintingsViewModel()
+
     NavHost(navController = navController, startDestination = Screens.ScreenHome.route) { // TODO cambiar a login o home
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
         composable(route = Screens.ScreenSignUp.route) { SignUp(navController) }
@@ -43,7 +45,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
 
 
 
-        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController) }
+        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController, paintingsViewModel)  }
         composable(route = Screens.ScreenMap.route) { Map(navController) }
         composable(route = Screens.ScreenMapMuseum.route) { MapMuseum(navController) }
 
