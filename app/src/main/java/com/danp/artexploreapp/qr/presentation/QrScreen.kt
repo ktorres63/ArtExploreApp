@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.danp.artexploreapp.R
+import com.danp.artexploreapp.paiting.domain.Painting
 import com.danp.artexploreapp.paiting.presentation.PaintingsViewModel
 import com.danp.artexploreapp.ui.theme.SecondaryColor
 import com.danp.artexploreapp.util.MyTopBar
@@ -64,55 +65,53 @@ private fun handleScanResult(
     navController: NavController,
     context: android.content.Context
 ) {
-    if (scannedData == null) {
-        Toast.makeText(context, "Escaneo cancelado. Por favor, intenta de nuevo.", Toast.LENGTH_LONG).show()
-    } else {
-        // Procesar el texto escaneado para extraer el ID
-        val lines = scannedData.split("\n") // Dividir el texto en líneas
-        if (lines.isNotEmpty()) {
-            val idLine = lines[0].trim() // Tomar la primera línea
-            if (idLine.startsWith("id:")) {
-                val scannedId = idLine.substringAfter("id:").trim() // Extraer el número del ID
-                val idNumber = scannedId.toIntOrNull()
-                if(idNumber == null || idNumber < 0){
-                    Toast.makeText(
-                        context,
-                        "Error al reconocer el QR. Asegúrese de que sea de una obra de arte.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return;
-                }
+    // Handle the case where the scanned data is null
+    if (scannedData.isNullOrEmpty()) {
+        showToast(context, "Escaneo cancelado. Por favor, intenta de nuevo.")
+        return
+    }
 
-                val painting = paintingsViewModel.getPaintingById(scannedId)
-                if (painting != null) {
-                    val gson = Gson()
-                    // Navegar a la pantalla de la pintura
-                    Log.i("EJEM", painting.toString())
-                    val paintingJson = gson.toJson(painting)
-                    navController.navigate("paintingView/${Uri.encode(paintingJson)}")
-                } else {
-                    Toast.makeText(
-                        context,
-                        "No se encontró la pintura",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    context,
-                    "Error al reconocer el QR.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        } else {
-            Toast.makeText(
-                context,
-                "El código QR escaneado no contiene información válida.",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+    // Extract the ID from the scanned data
+    val idNumber = extractIdFromScannedData(scannedData)
+    if (idNumber == null || idNumber < 0) {
+        showToast(context, "Error al reconocer el QR de la obra de arte")
+        return
+    }
+
+    // Fetch the painting by ID
+    val painting = paintingsViewModel.getPaintingById(idNumber.toString())
+    if (painting != null) {
+        navigateToPaintingView(navController, painting)
+    } else {
+        showToast(context, "No se encontró la obra de arte")
     }
 }
+
+// Helper function to show toast messages
+private fun showToast(context: android.content.Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+}
+
+// Extract ID from the scanned data
+private fun extractIdFromScannedData(scannedData: String): Int? {
+    val lines = scannedData.split("\n")
+    if (lines.isNotEmpty()) {
+        val idLine = lines[0].trim()
+        if (idLine.startsWith("id:")) {
+            return idLine.substringAfter("id:").trim().toIntOrNull()
+        }
+    }
+    return null
+}
+
+// Navigate to the painting view screen
+private fun navigateToPaintingView(navController: NavController, painting: Painting) {
+    val gson = Gson()
+    val paintingJson = gson.toJson(painting)
+    Log.i("EJEM", painting.toString())
+    navController.navigate("paintingView/${Uri.encode(paintingJson)}")
+}
+
 
 @Composable
 private fun QrScannerImage(onClick: () -> Unit) {
