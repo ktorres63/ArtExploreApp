@@ -24,5 +24,8 @@ sealed class Screens(val route: String) {
     data object ScreenUser : Screens(route = "user")
     data object ScreenQrPainting: Screens("qr")
 
+    // beacon
+    data object ScreenRoomBeacon: Screens("roomBeacon")
+
 
 }

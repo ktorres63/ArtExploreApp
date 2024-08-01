@@ -88,6 +88,12 @@ fun MapMuseum(navController: NavController) {
                                         navController.navigate(Screens.ScreenRoom1Map.route)
 
                                     }
+//                                    Log.i("EJES", (offset.x).toString() +"-"+ offset.y.toString())
+                                    if ((offset.x > 11 && offset.x < 190) && (offset.y > 840 && offset.y < 1430)) {
+
+                                        navController.navigate(Screens.ScreenRoomBeacon.route)
+
+                                    }
 
 
                                 }
@@ -223,7 +229,7 @@ fun MapMuseum(navController: NavController) {
                         rotate(degrees = 270F)
                     }) {
                         drawText(
-                            measuredText("Bloqueado", textMeasurer),
+                            measuredText("Ejemplo Aula", textMeasurer),
                             color = Color.LightGray
                         )
                     }
