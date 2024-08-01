@@ -32,10 +32,11 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
+    val paintingsViewModel = PaintingsViewModel()
     val auth = FirebaseAuth.getInstance()
 
+    NavHost(navController = navController, startDestination = Screens.ScreenHome.route) { // TODO cambiar a login o home
 
-    NavHost(navController = navController, startDestination = Screens.ScreenLogin2.route) { // TODO cambiar a login o home
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
         composable(route = Screens.ScreenLogin2.route) { Login(navController, AuthViewModel(auth)) }
 
@@ -51,7 +52,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
 
 
 
-        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController) }
+        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController, paintingsViewModel)  }
         composable(route = Screens.ScreenMap.route) { Map(navController) }
         composable(route = Screens.ScreenMapMuseum.route) { MapMuseum(navController) }
 
