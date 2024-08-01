@@ -1,5 +1,6 @@
 package com.danp.artexploreapp.util.navigation
 
+import PaintingCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,7 +16,7 @@ import com.danp.artexploreapp.auth.presentation.screens.register.SignUp
 import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
 import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
-import com.danp.artexploreapp.paiting.presentation.PaintingCard
+
 import com.danp.artexploreapp.paiting.presentation.PaintingsViewModel
 import com.danp.artexploreapp.profile.presentation.Perfil
 import com.danp.artexploreapp.qr.presentation.QrScreen
