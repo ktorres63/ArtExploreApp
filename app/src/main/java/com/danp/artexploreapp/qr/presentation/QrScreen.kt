@@ -42,17 +42,45 @@ fun QrScreen(navController: NavController, paintingsViewModel: PaintingsViewMode
             // Mensaje mejorado para el usuario
             Toast.makeText(context, "Escaneo cancelado. Por favor, intenta de nuevo.", Toast.LENGTH_LONG).show()
         } else {
-            val scannedId = result.contents
-            val painting = paintingsViewModel.getPaintingById(scannedId)
-            if (painting != null) {
-                val gson = Gson()
-                // Navegar a la pantalla de la pintura
-                Log.i("EJEM", painting.toString())
-                val paintingJson = gson.toJson(painting)
-                navController.navigate("paintingView/${Uri.encode(paintingJson)}")
+            val scannedData = result.contents
+
+            // Procesar el texto escaneado para extraer el ID
+            val lines = scannedData.split("\n") // Dividir el texto en líneas
+            if (lines.isNotEmpty()) {
+                val idLine = lines[0].trim() // Tomar la primera línea
+                if (idLine.startsWith("id:")) {
+                    val scannedId = idLine.substringAfter("id:").trim() // Extraer el número del ID
+
+                    val painting = paintingsViewModel.getPaintingById(scannedId)
+                    if (painting != null) {
+                        val gson = Gson()
+                        // Navegar a la pantalla de la pintura
+                        Log.i("EJEM", painting.toString())
+                        val paintingJson = gson.toJson(painting)
+                        navController.navigate("paintingView/${Uri.encode(paintingJson)}")
+                    } else {
+                        // Mensaje más descriptivo si no se encuentra la pintura
+                        Toast.makeText(
+                            context,
+                            "No se encontró la pintura con ID: $scannedId. Por favor, verifica el código QR.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    // Mostrar un mensaje si el formato del QR no es correcto
+                    Toast.makeText(
+                        context,
+                        "Error al reconocer el QR. Asegúrese de que sea de una obra de arte.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             } else {
-                // Mensaje más descriptivo si no se encuentra la pintura
-                Toast.makeText(context, "No se encontró la pintura con ID: $scannedId. Por favor, verifica el código QR.", Toast.LENGTH_LONG).show()
+                // Mensaje para el caso donde el escaneo no contiene texto
+                Toast.makeText(
+                    context,
+                    "El código QR escaneado no contiene información válida.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -126,7 +154,7 @@ fun QrScreen(navController: NavController, paintingsViewModel: PaintingsViewMode
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text("Escanear Código QR", color=Color.White, fontSize = 18.sp)
+                Text("Escanear Código QR", color = Color.White, fontSize = 18.sp)
             }
         }
     }
