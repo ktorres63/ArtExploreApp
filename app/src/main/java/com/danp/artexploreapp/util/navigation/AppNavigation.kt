@@ -22,7 +22,6 @@ import com.danp.artexploreapp.beacon_position_scanner.Final
 import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
 
-import com.danp.artexploreapp.paiting.presentation.PaintingCard
 
 import com.danp.artexploreapp.paiting.presentation.PaintingsViewModel
 import com.danp.artexploreapp.profile.presentation.Perfil
@@ -34,12 +33,11 @@ import com.danp.artexploreapp.paiting.presentation.Room1Paint3
 import com.danp.artexploreapp.paiting.presentation.Room1Paint4
 import com.danp.artexploreapp.paiting.presentation.Room1Paint5
 import com.danp.artexploreapp.settings.presentation.screens.Settings
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
 
-    NavHost(navController = navController, startDestination = Screens.ScreenHome.route) { // TODO cambiar a login o home
+    NavHost(navController = navController, startDestination = Screens.ScreenHome.route) {
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
         //composable(route = Screens.ScreenLogin2.route) { Login(navController, AuthViewModel(auth)) }
 
@@ -53,7 +51,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             PaintingCard(navController = navController, paintingJson = paintingJson)
         }
 
-        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController, paintingsViewModel)  }
+        composable(route = Screens.ScreenQrPainting.route) { QrScreen(navController, PaintingsViewModel())  }
         composable(route = Screens.ScreenMap.route) { Map(navController) }
         composable(route = Screens.ScreenMapMuseum.route) { MapMuseum(navController) }
 
