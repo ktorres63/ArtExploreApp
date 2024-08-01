@@ -7,21 +7,28 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.danp.artexploreapp.R
 import com.danp.artexploreapp.beacon_position_scanner.viewModel.MarkerViewModel
 
 object ProjSizes {
@@ -41,7 +48,7 @@ fun DpToPx(dp: Dp): Float {
 }
 
 @Composable
-fun Final(viewModel: MarkerViewModel = MarkerViewModel()) {
+fun Final(navController: NavController, viewModel: MarkerViewModel = MarkerViewModel()) {
     val switchState = viewModel.getSwitchState().observeAsState(false)
     viewModel.setContex(LocalContext.current)
     val statusMessage = viewModel.statusMessage.observeAsState("No datos se inicio")
@@ -49,7 +56,17 @@ fun Final(viewModel: MarkerViewModel = MarkerViewModel()) {
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.arrowellow),
+                    contentDescription = "Volver",
+                    modifier = Modifier.size(40.dp)
+                )
+            }
 
             Switch(
                 checked = switchState.value,

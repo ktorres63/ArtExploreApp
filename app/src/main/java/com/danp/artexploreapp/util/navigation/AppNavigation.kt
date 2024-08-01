@@ -69,7 +69,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(route = Screens.ScreenRoom1MapPaint5.route) { Room1Paint5(navController, ArtRoomViewModel(),) }
 
         //beacon
-        composable(route = Screens.ScreenRoomBeacon.route) { Final() }
+        composable(route = Screens.ScreenRoomBeacon.route) { Final(navController) }
 
     }
 
