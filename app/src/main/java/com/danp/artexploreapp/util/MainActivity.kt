@@ -9,12 +9,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.danp.artexploreapp.beacon_position_scanner.services.utilsIBeacon.BTPermissions
 import com.danp.artexploreapp.ui.theme.ArtExploreAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        BTPermissions(this).check()
+
         setContent {
             val navController = rememberNavController()
             ArtExploreAppTheme {

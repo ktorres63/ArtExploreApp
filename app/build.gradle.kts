@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
     
 }
@@ -51,6 +53,10 @@ android {
     }
 }
 
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
 dependencies {
 
     
@@ -103,5 +109,10 @@ dependencies {
 
     //implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation(libs.zxing.android.embedded)
+
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.46")
+    kapt("com.google.dagger:hilt-android-compiler:2.46")
 
 }

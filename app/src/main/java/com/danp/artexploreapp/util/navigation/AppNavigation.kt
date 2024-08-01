@@ -16,6 +16,7 @@ import com.danp.artexploreapp.auth.presentation.screens.login.LoginScreen
 import com.danp.artexploreapp.auth.presentation.screens.register.SignUp
 import com.danp.artexploreapp.auth.presentation.viewModels.AuthViewModel
 import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
+import com.danp.artexploreapp.beacon_position_scanner.Final
 import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.home.presentation.screens.Home
 
@@ -67,7 +68,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(route = Screens.ScreenRoom1MapPaint4.route) { Room1Paint4(navController, ArtRoomViewModel(),) }
         composable(route = Screens.ScreenRoom1MapPaint5.route) { Room1Paint5(navController, ArtRoomViewModel(),) }
 
-
+        //beacon
+        composable(route = Screens.ScreenRoomBeacon.route) { Final(navController) }
 
     }
 
