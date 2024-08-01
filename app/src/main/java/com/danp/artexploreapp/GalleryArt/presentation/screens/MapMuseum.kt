@@ -38,10 +38,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.danp.artexploreapp.R
+import com.danp.artexploreapp.googleMap.presentation.screens.Map
 import com.danp.artexploreapp.ui.theme.PurpleGrey40
 import com.danp.artexploreapp.util.MyTopBar
 import com.danp.artexploreapp.util.navigation.Screens
 import kotlinx.coroutines.launch
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewMapCanva(){
+    MapMuseum(navController = rememberNavController())
+}
 
 @Composable
 fun MapMuseum(navController: NavController) {
@@ -56,13 +63,10 @@ fun MapMuseum(navController: NavController) {
                 modifier = Modifier
                     .background(PurpleGrey40)
                     .fillMaxSize()
-                    .padding(top = 25.dp, start = 5.dp, end = 5.dp, bottom = 99.dp)
+                    .padding(top = 25.dp, start = 5.dp, end = 5.dp,)
             ) {
                 val textMeasurer = rememberTextMeasurer()
                 val scope = rememberCoroutineScope()
-
-
-
                 Canvas(modifier = Modifier
                     .fillMaxSize()
                     .pointerInput(Unit) {
@@ -167,7 +171,7 @@ fun MapMuseum(navController: NavController) {
                     drawPath(gallery4Path, Color(0xFF0D6A87))
                     drawPath(gallery4Path, Color.Black, style = Stroke(width = 8f))
                     withTransform({
-                        translate(left = customWidth * 5.8f, top = customHeight * -12.3f)
+                        translate(left = customWidth * 6f, top = customHeight * -11.7f)
                         rotate(degrees = 270F)
                     }) { drawText(measuredText("Habitacion 4", textMeasurer)) }
 
@@ -175,7 +179,7 @@ fun MapMuseum(navController: NavController) {
                     drawPath(gallery5Path, Color(0xFF820024))
                     drawPath(gallery5Path, Color.Black, style = Stroke(width = 8f))
                     withTransform({
-                        translate(left = customWidth * 5.8f, top = customHeight * -8.8f)
+                        translate(left = customWidth * 6f, top = customHeight * -8.3f)
                         rotate(degrees = 270F)
                     }) {
                         drawText(
@@ -249,7 +253,7 @@ fun MapMuseum(navController: NavController) {
         IconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier
-                .align(Alignment.TopStart)
+                //.align(Alignment.TopStart)
                 .padding(16.dp) // Padding para alejar el botón del borde
         ) {
             Icon(
@@ -291,3 +295,4 @@ fun pathToRectangles(
 
     return path
 }
+

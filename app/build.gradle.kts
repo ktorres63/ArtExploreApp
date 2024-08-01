@@ -68,6 +68,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation ("com.google.code.gson:gson:2.10.1")
+
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -81,8 +83,10 @@ dependencies {
     implementation(libs.play.services.maps) //agregado google map
     implementation("com.google.android.gms:play-services-location:21.3.0") //agregado
     implementation(libs.android.maps.utils) //agregado google map utils
-
+    implementation(libs.androidx.appcompat)
     implementation("com.google.accompanist:accompanist-permissions:0.19.0") // o la versión que desees
 
-
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation ("com.squareup.picasso:picasso:2.8")
 }

@@ -43,12 +43,12 @@ import com.danp.artexploreapp.auth.presentation.viewModels.LoginViewModel
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel) {
     viewModel.setNavController(navController);
-    login(navController, viewModel)
+    Login(navController, viewModel)
 
 }
 
 @Composable
-fun login(navController: NavHostController, viewModel: LoginViewModel) {
+fun Login(navController: NavHostController, viewModel: LoginViewModel) {
     val email: String by viewModel.email.observeAsState(initial = "")
     val password: String by viewModel.password.observeAsState(initial = "")
     val loginEnable: Boolean by viewModel.loginEnable.observeAsState(initial = false)
