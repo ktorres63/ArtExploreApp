@@ -82,6 +82,7 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.10.1")
 
+
     // Authentication
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-auth")
@@ -106,13 +107,12 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation ("com.squareup.picasso:picasso:2.8")
 
-
     //implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation(libs.zxing.android.embedded)
-
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.46")
     kapt("com.google.dagger:hilt-android-compiler:2.46")
+
 
 }

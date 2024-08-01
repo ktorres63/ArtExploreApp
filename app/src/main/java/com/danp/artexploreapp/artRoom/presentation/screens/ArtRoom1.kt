@@ -1,15 +1,21 @@
 package com.danp.artexploreapp.artRoom.presentation.screens
 
+import android.net.Uri
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -38,46 +44,28 @@ import com.danp.artexploreapp.util.navigation.Screens
 
 
 import androidx.compose.runtime.*
+import coil.compose.AsyncImage
+import com.danp.artexploreapp.paiting.domain.Painting
+import com.danp.artexploreapp.paiting.presentation.PaintingsViewModel
+import com.danp.artexploreapp.ui.theme.SecondaryColor
 import com.danp.artexploreapp.util.MyTopBar
+import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
+
 @Composable
-fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
+fun Room1(navController: NavController, viewModel: ArtRoomViewModel, paintingsViewModel: PaintingsViewModel) {
     val showDialog1 = viewModel.showDialog1
     val showDialog2 = viewModel.showDialog2
     val circlePosition = viewModel.circlePosition
-
-
-    val colorBackground = Color.White
-    val (screenWidth, screenHeight) = getScreenDimensions()
-    var iconBoxSize1 by remember { mutableStateOf(70.dp) }
-    var iconBoxSize2 by remember { mutableStateOf(70.dp) }
-    var iconBoxSize3 by remember { mutableStateOf(70.dp) }
-    var iconBoxSize4 by remember { mutableStateOf(70.dp) }
-    var iconBoxSize5 by remember { mutableStateOf(70.dp) }
-
-    val iconBoxOffsetX1 = (-150.dp)
-    val iconBoxOffsetY1 = (-120.dp)
-    val iconBoxOffsetX2 = (150.dp)
-    val iconBoxOffsetY2 = (0.dp)
-    val iconBoxOffsetX3 = (-150.dp)
-    val iconBoxOffsetY3 = (-550.dp)
-    val iconBoxOffsetX4 = (150.dp)
-    val iconBoxOffsetY4 = (-350.dp)
-    val iconBoxOffsetX5 = (150.dp)
-    val iconBoxOffsetY5 = (-650.dp)
-    //candelabros
+    val agentsData = paintingsViewModel.agentsData.collectAsState()
+    val isLoading = paintingsViewModel.isLoading.collectAsState()
     val iconBoxOffsetXCandelabro1 = (0.dp)
     val iconBoxOffsetYCandelabro1 = (-500.dp)
 
     val iconBoxOffsetXCandelabro2 = (0.dp)
     val iconBoxOffsetYCandelabro2 = (-150.dp)
-    //LaunchedEffect(Unit) {
-    //   delay(10000)
-    //   iconBoxSize1 = 100.dp
-    //}
-
-    // LaunchedEffect to change the size of IconBox1 after 10 seconds
+    val colorBackground = Color.White
 
     Scaffold(
         topBar = {
@@ -88,8 +76,6 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
             )
         }
     ) { ip ->
-
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -98,64 +84,25 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
             contentAlignment = Alignment.BottomCenter
         ) {
             DrawingCanvas(circlePosition)
-            IconBox(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetX1,
-                offsetY = iconBoxOffsetY1,
-                size1 = iconBoxSize1,
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox2(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetX2,
-                offsetY = iconBoxOffsetY2,
-                size2 = iconBoxSize2,
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox3(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetX3,
-                offsetY = iconBoxOffsetY3,
-                size3 = iconBoxSize3,
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox4(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetX4,
-                offsetY = iconBoxOffsetY4,
-                size4 = iconBoxSize4,
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox5(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetX5,
-                offsetY = iconBoxOffsetY5,
-                size5 = iconBoxSize5,
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox6(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetXCandelabro1,
-                offsetY = iconBoxOffsetYCandelabro1,
-
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-            IconBox7(
-                viewModel = viewModel,
-                offsetX = iconBoxOffsetXCandelabro2,
-                offsetY = iconBoxOffsetYCandelabro2,
-
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
-
+            if (isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center), color = SecondaryColor)
+            } else {
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalItemSpacing = 10.dp
+                ) {
+                    items(agentsData.value.take(8)) { painting ->
+                        IconBox(
+                            painting = painting,
+                            navController = navController
+                        )
+                    }
+                }
+            }
         }
+
+
 
         if (showDialog1) {
             NocheEstrelladaDialogScreen(viewModel)
@@ -168,29 +115,27 @@ fun Room1(navController: NavController, viewModel: ArtRoomViewModel) {
 
 @Composable
 fun IconBox(
-    viewModel: ArtRoomViewModel,
-    offsetX: Dp,
-    offsetY: Dp,
-    size1: Dp,
+    painting: Painting,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = offsetY)
+        modifier = modifier
             .padding(60.dp)
-            .size(size1)
+            .size(70.dp)
             .clip(CircleShape)
             .clickable {
-                navController.navigate(Screens.ScreenRoom1MapPaint1.route) {
+                val gson = Gson()
+                val paintingJson = Uri.encode(gson.toJson(painting))
+                navController.navigate("paintingView/$paintingJson") {
                     popUpTo(navController.graph.startDestinationId)
                     launchSingleTop = true
                 }
             },
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.monalisa),
+        AsyncImage(
+            model = painting.imageURL,
             contentDescription = "Ícono",
             modifier = Modifier
                 .padding(3.dp)
@@ -199,128 +144,9 @@ fun IconBox(
     }
 }
 
-@Composable
-fun IconBox2(
-    viewModel: ArtRoomViewModel,
-    offsetX: Dp,
-    offsetY: Dp,
-    size2: Dp,
-    navController: NavController,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = offsetY)
-            .padding(60.dp)
-            .size(size2)
-            .clip(CircleShape)
-            .clickable {
-                navController.navigate(Screens.ScreenRoom1MapPaint2.route)
-            },
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.grito),
-            contentDescription = "Ícono",
-            modifier = Modifier
-                .padding(3.dp)
-                .size(140.dp)
-        )
-    }
-}
 
 @Composable
-fun IconBox3(
-    viewModel: ArtRoomViewModel,
-    offsetX: Dp,
-    offsetY: Dp,
-    size3: Dp,
-    navController: NavController,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = offsetY)
-            .padding(60.dp)
-            .size(size3)
-            .clip(CircleShape)
-            .clickable {
-                navController.navigate(Screens.ScreenRoom1MapPaint3.route)
-            },
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.elbeso),
-            contentDescription = "Ícono",
-            modifier = Modifier
-                .padding(3.dp)
-                .size(140.dp)
-        )
-    }
-}
-
-@Composable
-fun IconBox4(
-    viewModel: ArtRoomViewModel,
-    offsetX: Dp,
-    offsetY: Dp,
-    size4: Dp,
-    navController: NavController,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = offsetY)
-            .padding(60.dp)
-            .size(size4)
-            .clip(CircleShape)
-            .clickable {
-                navController.navigate(Screens.ScreenRoom1MapPaint4.route)
-            },
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.nocheestrellada),
-            contentDescription = "Ícono",
-            modifier = Modifier
-                .padding(3.dp)
-                .size(140.dp)
-        )
-    }
-}
-
-@Composable
-fun IconBox5(
-    viewModel: ArtRoomViewModel,
-    offsetX: Dp,
-    offsetY: Dp,
-    size5: Dp,
-    navController: NavController,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = offsetY)
-            .padding(60.dp)
-            .size(size5)
-            .clip(CircleShape)
-            .clickable {
-                navController.navigate(Screens.ScreenRoom1MapPaint5.route)
-            },
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.dama),
-            contentDescription = "Ícono",
-            modifier = Modifier
-                .padding(3.dp)
-                .size(140.dp)
-        )
-    }
-}
-
-@Composable
-fun IconBox6(
+fun IconBox6( //candelabro
     viewModel: ArtRoomViewModel,
     offsetX: Dp,
     offsetY: Dp,
@@ -346,7 +172,7 @@ fun IconBox6(
 }
 
 @Composable
-fun IconBox7(
+fun IconBox7( //candelabro
     viewModel: ArtRoomViewModel,
     offsetX: Dp,
     offsetY: Dp,
