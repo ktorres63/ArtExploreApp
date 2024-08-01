@@ -49,11 +49,19 @@ fun QrScreen(navController: NavController, paintingsViewModel: PaintingsViewMode
             modifier = Modifier
                 .fillMaxSize()
                 .padding(ip),
+            verticalArrangement = Arrangement.Top, // Centra verticalmente
+            horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente
+        ) {
+            ScannerText()
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(ip),
             verticalArrangement = Arrangement.Center, // Centra verticalmente
             horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente
         ) {
             QrScannerImage { launchQrScanner(barcodeLauncher) }
-            ScannerText()
             ScanButton { launchQrScanner(barcodeLauncher) }
         }
     }
@@ -117,7 +125,7 @@ private fun navigateToPaintingView(navController: NavController, painting: Paint
 private fun QrScannerImage(onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(300.dp)
+            .size(400.dp)
             .padding(12.dp)
             .clickable { onClick() }
     ) {
@@ -135,7 +143,7 @@ private fun QrScannerImage(onClick: () -> Unit) {
 @Composable
 private fun ScannerText() {
     Text(
-        text = "Escáner QR",
+        text = "Escaner QR de la obra de Arte",
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
