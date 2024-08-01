@@ -39,7 +39,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     NavHost(navController = navController, startDestination = Screens.ScreenHome.route) { // TODO cambiar a login o home
 
         composable(route = Screens.ScreenLogin.route) { LoginScreen(navController, LoginViewModel()) }
-        composable(route = Screens.ScreenLogin2.route) { Login(navController, AuthViewModel(auth)) }
+        //composable(route = Screens.ScreenLogin2.route) { Login(navController, AuthViewModel(auth)) }
 
         composable(route = Screens.ScreenSignUp.route) { SignUp(navController) }
         composable(route = Screens.ScreenHome.route) { Home(navController, PaintingsViewModel()) }

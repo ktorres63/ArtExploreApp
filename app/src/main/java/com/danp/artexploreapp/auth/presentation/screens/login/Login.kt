@@ -44,7 +44,7 @@ import com.danp.artexploreapp.util.navigation.Screens
 
 
 @Composable
-fun Login(navController: NavController, viewModel: AuthViewModel) {
+fun Login(onLoginSuccess: () -> Unit, viewModel: AuthViewModel) {
     val signInStatus by viewModel.signInStatus.observeAsState(initial = false)
 
     val baseContext = LocalContext.current
@@ -129,12 +129,13 @@ fun Login(navController: NavController, viewModel: AuthViewModel) {
     }
     LaunchedEffect(signInStatus) {
         if (signInStatus == true) {
+            onLoginSuccess.invoke()
            // Toast.makeText(baseContext,"Success", Toast.LENGTH_SHORT).show()
-            navController.navigate(Screens.ScreenHome.route) {
-                popUpTo(Screens.ScreenLogin.route) {
-                    inclusive = true
-                }
-            }
+//            navController.navigate(Screens.ScreenHome.route) {
+//                popUpTo(Screens.ScreenLogin.route) {
+//                    inclusive = true
+//                }
+//            }
         } else {
            // Toast.makeText(baseContext,"Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
         }

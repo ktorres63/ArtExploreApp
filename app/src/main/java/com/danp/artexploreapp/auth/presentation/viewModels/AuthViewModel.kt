@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthViewModel(private val auth: FirebaseAuth) : ViewModel() {
-    var email = mutableStateOf("")
-    var password = mutableStateOf("")
+    var email = mutableStateOf("admin@gmail.com")
+    var password = mutableStateOf("admin123")
 
     private val _signInStatus = MutableLiveData<Boolean>()
     val signInStatus: LiveData<Boolean> get() = _signInStatus
