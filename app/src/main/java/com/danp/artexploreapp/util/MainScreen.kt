@@ -1,5 +1,6 @@
 package com.danp.artexploreapp.util
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -37,6 +38,7 @@ fun MainScreen(navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
+            Log.i("ROUTE", "$currentRoute")
             if (currentRoute in bottomBarRoutes) {
                 NavigationBar(containerColor = PrimaryColor) {
                     NavigationBarItem(

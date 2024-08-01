@@ -1,37 +1,27 @@
-package com.danp.artexploreapp.paiting.presentation
-
+import android.content.Context
+import android.media.AudioManager
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.danp.artexploreapp.R
@@ -40,10 +30,24 @@ import com.danp.artexploreapp.ui.theme.PrimaryColor
 import com.danp.artexploreapp.util.MyTopBar
 import com.google.gson.Gson
 
+
 @Composable
 fun PaintingCard(navController: NavController, paintingJson: String?) {
     val gson = Gson()
     val painting = paintingJson?.let { gson.fromJson(it, Painting::class.java) }
+
+    var player by remember { mutableStateOf<ExoPlayer?>(null) }
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) } // Estado para el diálogo
+
+    LaunchedEffect(Unit) {
+        player = ExoPlayer.Builder(context).build()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { player?.release() }
+    }
+
     Scaffold(
         topBar = { MyTopBar(navController = navController, "Painting information", true) }
     ) { ip ->
@@ -57,9 +61,7 @@ fun PaintingCard(navController: NavController, paintingJson: String?) {
                     .width(350.dp)
                     .align(Alignment.Center)
                     .padding(top = 18.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
-                )
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -108,7 +110,20 @@ fun PaintingCard(navController: NavController, paintingJson: String?) {
                             contentScale = ContentScale.FillBounds,
                         )
                         IconButtonWithText(
-                            onClick = { /* Handle click */ },
+                            onClick = {
+                                if (areHeadphonesConnected(context)) {
+                                    // Reproduce el audio
+                                    painting.audio.let { audioUrl ->
+                                        val mediaItem = MediaItem.fromUri(Uri.parse(audioUrl))
+                                        player?.setMediaItem(mediaItem)
+                                        player?.prepare()
+                                        player?.play()
+                                    }
+                                } else {
+                                    // Muestra el diálogo solicitando conectar audífonos
+                                    showDialog = true
+                                }
+                            },
                             modifier = Modifier.padding(8.dp)
                         )
 
@@ -142,6 +157,22 @@ fun PaintingCard(navController: NavController, paintingJson: String?) {
             }
         }
     }
+
+    // Diálogo persistente para conectar audífonos
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { /* No hacer nada al cerrar el diálogo */ },
+            title = { Text("Conectar Audífonos") },
+            text = { Text("Por favor, conecta tus audífonos para poder reproducir el audio.") },
+            confirmButton = {
+                Button(onClick = {
+                    showDialog = false // Cierra el diálogo
+                }) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -152,7 +183,11 @@ fun IconButtonWithText(onClick: () -> Unit, modifier: Modifier) {
             contentDescription = "favorites",
             colorFilter = ColorFilter.tint(Color.DarkGray)
         )
-
-        Text("English")
+        Text("Spanish")
     }
+}
+
+fun areHeadphonesConnected(context: Context): Boolean {
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    return audioManager.isWiredHeadsetOn || audioManager.isBluetoothA2dpOn
 }

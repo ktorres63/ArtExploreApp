@@ -45,6 +45,8 @@ fun Home(navController: NavController, paintingsViewModel: PaintingsViewModel) {
                     verticalItemSpacing = 10.dp
                 ) {
                     items(agentsData.value) { painting ->
+                        Log.i("EJEM-pai", painting.toString())
+
                         PaintingSection(navController,painting = painting)
                         Log.i("PRINT: ", "${agentsData.value[0].id}")
                     }

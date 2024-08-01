@@ -11,4 +11,6 @@ data class Painting(
     @SerializedName("category") val category: String,
     @SerializedName("image_url") val imageURL: String,
     @SerializedName("major") val major: Int,
+    @SerializedName("audio") val audio: String,
+
 )

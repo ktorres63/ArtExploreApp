@@ -1,6 +1,7 @@
 package com.danp.artexploreapp.paiting.presentation
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -26,10 +27,16 @@ import com.google.gson.Gson
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaintingSection(navController: NavController, painting: Painting, modifier: Modifier = Modifier) {
+
+    Log.i("EJEM-pa", painting.toString())
     val gson = Gson()
     Card(
         onClick = {
             val paintingJson = gson.toJson(painting)
+
+            val exampel = Uri.encode(paintingJson)
+            Log.i("EJEM", exampel)
+
             navController.navigate("paintingView/${Uri.encode(paintingJson)}")},
         modifier = modifier,
         shape = RoundedCornerShape(10.dp),
